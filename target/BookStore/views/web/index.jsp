@@ -1,14 +1,10 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 1/9/2021
-  Time: 8:56 AM
-  To change this template use File | Settings | File Templates.
---%>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="/common/taglib.jsp" %>
 <c:url value="/template/web" var="url"/>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 
 <!-- Start slider -->
 <section id="aa-slider">
@@ -302,7 +298,7 @@
                                         <div class="aa-testimonial-info">
                                     <p>${reviewEntities.get(reviewEntities.size()-2).getCustomerEntity().getHoten_Customer()}</p>
                                 </div>
-                            </li>
+                                </div>
                             </li>
                         </c:if>
                         <!-- single slide -->

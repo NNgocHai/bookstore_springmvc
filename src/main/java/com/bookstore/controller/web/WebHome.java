@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@WebServlet("/web/home")
+@WebServlet("/web/home11")
 
 public class WebHome extends HttpServlet {
     public WebHome(){
