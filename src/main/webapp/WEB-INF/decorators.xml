@@ -11,7 +11,6 @@
         <pattern>/admin/logout</pattern>
         <pattern>/shipper/logout</pattern>
         <pattern>/shipper/login</pattern>
-
     </excludes>
     <!-- decorator dua vao ten cua URL de apply giao dien tuong ung cho page -->
     <!-- load trang admin -->

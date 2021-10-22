@@ -20,11 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class test {
-    @RequestMapping("/")
-    public String index() {
-        return "redirect:web/home";
-    }
+    public class test {
+        @RequestMapping("/")
+        public String index() {
+            return "redirect:web/home";
+        }
     @RequestMapping("/web/home")
     public String WebHome(ModelMap model){
         ProductService_impl productService_impl=new ProductService_impl();
@@ -60,6 +60,7 @@ public class test {
         model.addAttribute("productList_km", productList_km);
         model.addAttribute("productListHotDiscount", productService_impl.FindHotDiscount());
         model.addAttribute("product_hotList", product_hotList);
+
         return "web/index";
     }
 
@@ -124,7 +125,7 @@ public class test {
                 session.setAttribute("Orders", gioHangEntities);
                 session.setAttribute("tongtien", tongtien);
             }
-            return "web/index";
+            return "redirect:/web/home";
         } else {
             model.addAttribute("errorMessage", "Tài khoản hoặc mật khẩu sai!");
             return "web/login";
