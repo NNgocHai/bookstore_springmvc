@@ -71,7 +71,7 @@
                                                 <c:if test="${product.ma_CuonSach == Order.getCuonSachEntity().getMa_CuonSach()}">
                                                         <td><fmt:formatNumber
                                                                 type="number" maxFractionDigits="3"
-                                                                value="${product.getGiabia()}"/> VNĐ</td>
+                                                                value="${product.giabia}"/> VNĐ</td>
                                                 </c:if>
 
                                             </c:forEach>

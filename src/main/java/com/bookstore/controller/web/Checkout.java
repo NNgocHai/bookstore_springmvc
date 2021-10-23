@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/web/checkout")
+@WebServlet("/web/checkout1")
 
 public class Checkout extends HttpServlet {
     @Override

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@WebServlet("/web/product/AddtoCart")
+@WebServlet("/web/product/AddtoCart1")
 public class AddtoCart extends HttpServlet {
     public AddtoCart() {
         super();

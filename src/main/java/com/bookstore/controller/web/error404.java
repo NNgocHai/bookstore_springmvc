@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/web/error404")
+@WebServlet("/web/error4041")
 public class error404 extends HttpServlet {
     public error404() {
         super();
