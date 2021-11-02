@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/web/product/DeletetoCart")
+@WebServlet("/web/product/DeletetoCart1")
 public class DeletetoCart extends HttpServlet {
     public DeletetoCart() {
         super();
