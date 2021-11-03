@@ -5,6 +5,10 @@ import com.bookstore.entity.CategoryEntity;
 import com.bookstore.entity.CuonSachEntity;
 import com.bookstore.service_impl.CategoryService_impl;
 import com.bookstore.service_impl.ProductService_impl;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,13 +20,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/web/product")
-public class ProductViewList extends HttpServlet{
+@Controller
+@RequestMapping("/web/")
+public class ProductViewList {
     public ProductViewList(){
         super();
     }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String page= request.getParameter("page");//so trang
+
+    @RequestMapping("product")
+    public String doGet(@RequestParam(value = "page", required = false) String page,
+                           ModelMap model){
         if (page == null)
             page= "1";
         int maxResult = 9;// so bang record load len 1 trang
@@ -57,17 +64,14 @@ public class ProductViewList extends HttpServlet{
             productList_km.add(product_km);
 
         }
-        request.setAttribute("productListCurrent", productListCurrent);
-        request.setAttribute("productListCurrent_km", productListCurrent_km);
+        model.addAttribute("productListCurrent", productListCurrent);
+        model.addAttribute("productListCurrent_km", productListCurrent_km);
 
-        request.setAttribute("productList_km", productList_km);
-        request.setAttribute("categoryList", categoryList);
-        request.setAttribute("productList", navigationDaoImpl.getList());
-        request.setAttribute("navigationDaoImpl", navigationDaoImpl);
-        RequestDispatcher rd = request.getRequestDispatcher("/views/web/productlist.jsp");
-        rd.forward(request, response);
-    }
+        model.addAttribute("productList_km", productList_km);
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("productList", navigationDaoImpl.getList());
+        model.addAttribute("navigationDaoImpl", navigationDaoImpl);
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        return "web/productlist";
     }
 }

@@ -7,6 +7,9 @@ import com.bookstore.service.ReviewService;
 import com.bookstore.service_impl.ChiTietDonHangService_impl;
 import com.bookstore.service_impl.ProductService_impl;
 import com.bookstore.service_impl.ReviewService_impl;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,13 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@WebServlet("/web/home1")
-
-public class WebHome extends HttpServlet {
+@Controller
+@RequestMapping("/web/")
+public class WebHome {
     public WebHome(){
         super();
     }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    @RequestMapping("home1")
+    public String doGet(ModelMap model) {
 
 
         ProductService_impl productService_impl=new ProductService_impl();
@@ -62,16 +67,11 @@ public class WebHome extends HttpServlet {
         List<CuonSachEntity> cuon= productService_impl.FindHotDiscount();
         cuon.get(0).getDiscount();
 
-        request.setAttribute("reviewEntities", reviewEntities);
-        request.setAttribute("productList_km", productList_km);
-        request.setAttribute("productListHotDiscount", productService_impl.FindHotDiscount());
-        request.setAttribute("product_hotList", product_hotList);
-        RequestDispatcher rd = request.getRequestDispatcher("/views/web/index.jsp");
-        rd.forward(request, response);
-    }
+        model.addAttribute("reviewEntities", reviewEntities);
+        model.addAttribute("productList_km", productList_km);
+        model.addAttribute("productListHotDiscount", productService_impl.FindHotDiscount());
+        model.addAttribute("product_hotList", product_hotList);
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        return "web/index";
     }
 }

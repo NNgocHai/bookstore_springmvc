@@ -10,33 +10,27 @@ import com.bookstore.service_impl.ChiTietDonHangService_impl;
 import com.bookstore.service_impl.DonHangService_impl;
 import com.bookstore.service_impl.GioHangService_impl;
 import com.bookstore.service_impl.ProductService_impl;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/web/payment")
-
-public class Payment extends HttpServlet {
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        request.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=UTF-8");
-
-
-        String address = (request.getParameter("address"));
-        String phone = (request.getParameter("phone"));
-
+@Controller
+@RequestMapping("/web/")
+public class Payment {
+    @RequestMapping(value = "payment", method = RequestMethod.POST)
+    public String doPost(@RequestParam("address") String address,
+                            @RequestParam("phone") String phone,
+                            @RequestParam("email") String user_email,
+                            HttpSession session,
+                            ModelMap model) {
 
         GioHangService gioHangService = new GioHangService_impl();
         DonHangService donHangService = new DonHangService_impl();
@@ -46,7 +40,6 @@ public class Payment extends HttpServlet {
         CuonSachEntity cuonSachEntity = new CuonSachEntity();
         List<CuonSachEntity>cuonSachEntities= new ArrayList<CuonSachEntity>();
         cuonSachEntities= productService.findAll();
-        HttpSession session = request.getSession();
 
         CustomerEntity person = (CustomerEntity) session.getAttribute("person");
         int tongtien = (int) session.getAttribute("tongtien");
@@ -87,12 +80,10 @@ public class Payment extends HttpServlet {
         session.removeAttribute("tongtien");
         Orders.clear();
         session.setAttribute("Orders", Orders);
-        request.setAttribute("sucess", "Đặt hàng thành công");
+        model.addAttribute("sucess", "Đặt hàng thành công");
         int ma_dh=donHangEntity.getMa_DH();
-        String user_email=request.getParameter("email");
         ConfirmPayment confirmPayment=new ConfirmPayment(ma_dh,user_email);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/web/checkout.jsp");
-        dispatcher.forward(request, response);
 
+        return "web/checkout";
     }
 }
