@@ -3,26 +3,25 @@ package com.bookstore.controller.web;
 import com.bookstore.entity.CuonSachEntity;
 import com.bookstore.service.ProductService;
 import com.bookstore.service_impl.ProductService_impl;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/web/productDetail")
-public class ProductViewDetail extends HttpServlet {
+@Controller
+@RequestMapping("/web/")
+public class ProductViewDetail {
     public ProductViewDetail(){
         super();
     }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id= request.getParameter("id");
-        String Cate= request.getParameter("Cate");
 
+    @RequestMapping("productDetail")
+    public String doGet(@RequestParam("id") String id,
+                           @RequestParam("Cate") String Cate,
+                           ModelMap model) {
         if (id == null)
             id= "";
         if (Cate == null)
@@ -49,16 +48,13 @@ public class ProductViewDetail extends HttpServlet {
         Catee.get(0).getCategoryEntity().getTen_DauSach();
         double db =(Double.parseDouble(String.valueOf(product.getGiabia())) * (1 - (Double.parseDouble(String.valueOf(product.getDiscount()))/100)));
         product_km.setGiabia((int)db);
-        request.setAttribute("Catee", Catee);
-        request.setAttribute("Catee_km", Catee_km);
+        model.addAttribute("Catee", Catee);
+        model.addAttribute("Catee_km", Catee_km);
 
-        request.setAttribute("product", product);
-        request.setAttribute("product_km", product_km);
+        model.addAttribute("product", product);
+        model.addAttribute("product_km", product_km);
 
-        RequestDispatcher rd = request.getRequestDispatcher("/views/web/ProductViewDetail.jsp");
-        rd.forward(request, response);
-
-
+        return "web/ProductViewDetail";
     }
 
 }

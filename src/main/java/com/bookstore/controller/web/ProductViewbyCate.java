@@ -4,26 +4,23 @@ import com.bookstore.entity.CategoryEntity;
 import com.bookstore.entity.CuonSachEntity;
 import com.bookstore.service_impl.CategoryService_impl;
 import com.bookstore.service_impl.ProductService_impl;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/web/product/Cate")
-public class ProductViewbyCate extends HttpServlet{
+@Controller
+@RequestMapping("/web/")
+public class ProductViewbyCate{
     public ProductViewbyCate(){
         super();
     }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-        String Cate= request.getParameter("Cate");
+    @RequestMapping("product/Cate")
+    public String doGet(@RequestParam("Cate") String Cate,
+                           ModelMap model) {
         if (Cate == null)
             Cate= "";
 
@@ -61,14 +58,12 @@ public class ProductViewbyCate extends HttpServlet{
             productList_km.add(product_km);
 
         }
-        request.setAttribute("productListCurrent_km", productListCurrent_km);
-        request.setAttribute("productListCurrent", productListCurrent);
-        request.setAttribute("productList", productList);
-        request.setAttribute("categoryList", categoryList);
-        request.setAttribute("productList_km", productList_km);
+        model.addAttribute("productListCurrent_km", productListCurrent_km);
+        model.addAttribute("productListCurrent", productListCurrent);
+        model.addAttribute("productList", productList);
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("productList_km", productList_km);
 
-
-        RequestDispatcher rd = request.getRequestDispatcher("/views/web/productlist.jsp");
-        rd.forward(request, response);
+        return "web/productlist";
     }
 }

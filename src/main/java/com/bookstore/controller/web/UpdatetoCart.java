@@ -5,6 +5,10 @@ import com.bookstore.entity.GioHangEntity;
 import com.bookstore.entity.GioHangIDKey;
 import com.bookstore.service.GioHangService;
 import com.bookstore.service_impl.GioHangService_impl;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,31 +20,29 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/web/product/UpdatetoCart")
-
-public class UpdatetoCart extends HttpServlet {
+@Controller
+@RequestMapping("/web/")
+public class UpdatetoCart {
     public UpdatetoCart() {
         super();
     }
 
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher(request.getContextPath() + "/views/web/CartDetail.jsp");
-        dispatcher.forward(request, response);
-
+    @RequestMapping("product/UpdatetoCart")
+    public String doGet() {
+        return "web/CartDetail";
     }
 
-    @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @RequestMapping(value = "product/UpdatetoCart", method = RequestMethod.POST)
+    public String doPost(HttpSession session,
+                         ModelMap model,
+                         HttpServletRequest request){
         int tongtien = 0;
 
-        HttpSession session = request.getSession();
         List<GioHangEntity> Orders = (List<GioHangEntity>) session.getAttribute("Orders");
         if(Orders == null) {
-            request.setAttribute("error", "Bạn chưa có cuốn sách nào trong giỏ hàng");
-            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/views/web/CartDetail.jsp");
-            dispatcher.forward(request, response);
+            model.addAttribute("error", "Bạn chưa có cuốn sách nào trong giỏ hàng");
+
+            return "web/CartDetail";
         }
         else {
 
@@ -72,7 +74,8 @@ public class UpdatetoCart extends HttpServlet {
             session.setAttribute("length_orders", n);
             session.setAttribute("Orders", Orders);
             session.setAttribute("tongtien", tongtien);
-            response.sendRedirect(request.getContextPath() + "/web/product/CartDetail");
+
+            return "redirect:/web/product/CartDetail";
         }
     }
 

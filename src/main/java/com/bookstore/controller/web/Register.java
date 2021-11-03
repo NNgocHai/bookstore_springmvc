@@ -3,34 +3,31 @@ package com.bookstore.controller.web;
 import com.bookstore.dao.CustomerDao;
 import com.bookstore.dao_impl.CustomerDao_impl;
 import com.bookstore.email.SendingEmail;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.Random;
 
-@WebServlet("/web/register")
-public class Register extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher=this.getServletContext().getRequestDispatcher("/views/web/register.jsp");
-        dispatcher.forward(request,response);
+@Controller
+@RequestMapping("/web/")
+public class Register {
+    @RequestMapping(value = "register", method = RequestMethod.GET)
+    public String doGet() {
+        return "web/register";
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=UTF-8");
-        String customer_tk = request.getParameter("username");
-        String customer_password = request.getParameter("password");
-        String customer_name = request.getParameter("name");
-        String customer_gmail = request.getParameter("email");
-        String customer_sdt = request.getParameter("sdt");
+    @RequestMapping(value = "register", method = RequestMethod.POST)
+    public String doPost(@RequestParam("username") String customer_tk,
+                         @RequestParam("password") String customer_password,
+                         @RequestParam("name") String customer_name,
+                         @RequestParam("email") String customer_gmail,
+                         @RequestParam("sdt") String customer_sdt,
+                         HttpSession session,
+                         ModelMap model) {
         int customer_vitien = 1000000;
 
 
@@ -42,8 +39,6 @@ public class Register extends HttpServlet {
 
         if (a)
         {
-
-            HttpSession session=request.getSession();
             session.setAttribute("taikhoan_dk",customer_tk);
             session.setAttribute("gmail_dk",customer_gmail);
             session.setAttribute("ten_dk",customer_name);
@@ -58,29 +53,30 @@ public class Register extends HttpServlet {
 
             session.setAttribute("code_dk",code_string);
             SendingEmail se=new SendingEmail(customer_gmail,customer_name,code_string);
-            RequestDispatcher rd=request.getRequestDispatcher("/views/web/verification.jsp");
-            rd.forward(request,response);
+
+            return "web/verification";
         } else {
-            request.setAttribute("errMessage", "Tạo tài khoản thất bại. Hãy thử lại !!!");
-            request.setAttribute("taikhoan",customer_tk);
-            request.setAttribute("matkhau",customer_password);
-            request.setAttribute("hoten",customer_name);
-            request.setAttribute("gmail",customer_gmail);
-            request.setAttribute("sdt",customer_sdt);
+            model.addAttribute("errMessage", "Tạo tài khoản thất bại. Hãy thử lại !!!");
+            model.addAttribute("taikhoan",customer_tk);
+            model.addAttribute("matkhau",customer_password);
+            model.addAttribute("hoten",customer_name);
+            model.addAttribute("gmail",customer_gmail);
+            model.addAttribute("sdt",customer_sdt);
+
             if (gmail_check==false)
             {
-                request.setAttribute("errGmail","Email đã tồn tại");
+                model.addAttribute("errGmail","Email đã tồn tại");
             }
             if(sdt_check==false)
             {
-                request.setAttribute("errSdt","Số điện thoại đã tồn tại");
+                model.addAttribute("errSdt","Số điện thoại đã tồn tại");
             }
             if(taikhoan_check==false)
             {
-                request.setAttribute("errTaikhoan","Tên tài khoản đã tồn tại");
+                model.addAttribute("errTaikhoan","Tên tài khoản đã tồn tại");
             }
-            RequestDispatcher rd = request.getRequestDispatcher("/views/web/register.jsp");
-            rd.forward(request, response);
+
+            return "web/register";
         }
 
     }
