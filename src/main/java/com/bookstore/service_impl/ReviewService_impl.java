@@ -4,10 +4,15 @@ import com.bookstore.dao.ReviewDao;
 import com.bookstore.dao_impl.ReviewDao_impl;
 import com.bookstore.entity.ReviewEntity;
 import com.bookstore.service.ReviewService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
-
+@Service
+@Transactional
 public class ReviewService_impl implements ReviewService {
+    @Autowired
     public ReviewDao reviewDao=new ReviewDao_impl();
     public List<ReviewEntity> findAll(){
         return reviewDao.findAll();

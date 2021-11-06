@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">123456</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/bansachonline?autoReconnect=true&amp;characterEncoding=utf-8&amp;useUnicode=true&amp;connectionCollation=utf8_unicode_ci&amp;characterSetResults=utf8&amp;useSSL=false</property>
+        <!-- Xem cac lenh truy van sql -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="show_sql">true</property>
+        <!-- Mapping -->
+        <mapping class="com.bookstore.entity.AdminsEntity" />
+        <mapping class="com.bookstore.entity.CustomerEntity"/>
+        <mapping class="com.bookstore.entity.ReviewEntity"/>
+        <mapping class="com.bookstore.entity.DonHangEntity"/>
+        <mapping class="com.bookstore.entity.CategoryEntity"/>
+        <mapping class="com.bookstore.entity.CuonSachEntity"/>
+        <mapping class="com.bookstore.entity.ShipperEntity"/>
+        <mapping class="com.bookstore.entity.ChiTietDonHangEntity"/>
+        <mapping class="com.bookstore.entity.GioHangEntity"/>
+        <mapping class="com.bookstore.entity.GiaoHangEntity"/>
+    </session-factory>
+</hibernate-configuration>
+-- hibernate.cfg.xml

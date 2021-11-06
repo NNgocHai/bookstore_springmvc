@@ -5,10 +5,15 @@ import com.bookstore.dao_impl.GioHangDao_impl;
 import com.bookstore.entity.CuonSachEntity;
 import com.bookstore.entity.GioHangEntity;
 import com.bookstore.service.GioHangService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
-
+@Service
+@Transactional
 public class GioHangService_impl implements GioHangService {
+    @Autowired
     public GioHangDao gioHangDao=new GioHangDao_impl();
     @Override
     public List<GioHangEntity> findAll() {

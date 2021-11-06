@@ -1,15 +1,18 @@
 package com.bookstore.dao_impl;
 
 import com.bookstore.entity.CuonSachEntity;
-import com.bookstore.utils.HibernateUtil;
 import org.hibernate.*;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Repository
 public class NavigationDao_impl<E> implements com.bookstore.dao.NavigationDao {
+    @Autowired
+    SessionFactory factory;
 
 
     private int totalRecords;
@@ -29,11 +32,9 @@ public class NavigationDao_impl<E> implements com.bookstore.dao.NavigationDao {
     private List<Integer> navigationPages;
 
 
-    public NavigationDao_impl( int page, int maxResult, int maxNavigationPage)
+    public void Navigation( int page, int maxResult, int maxNavigationPage)
     {
-
-
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         Transaction transaction = null;
         transaction = session.beginTransaction();
         try{

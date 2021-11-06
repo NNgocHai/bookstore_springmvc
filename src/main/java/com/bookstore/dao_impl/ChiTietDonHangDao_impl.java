@@ -2,21 +2,32 @@ package com.bookstore.dao_impl;
 
 import com.bookstore.dao.ChiTietDonHangDao;
 import com.bookstore.entity.ChiTietDonHangEntity;
-import com.bookstore.utils.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Repository
 public class ChiTietDonHangDao_impl extends GenericDao_impl<Integer, ChiTietDonHangEntity> implements ChiTietDonHangDao {
+    @Autowired
+    private SessionFactory factory;
+
     @Override
     public List<Object[]> FindHot() {
         List<Object[]> results =new ArrayList<Object[]>();
         Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         try  {
             // start a transaction
             transaction = session.beginTransaction();
@@ -42,7 +53,7 @@ public class ChiTietDonHangDao_impl extends GenericDao_impl<Integer, ChiTietDonH
     public List<Object[]> ReportDoanhThu_DauSach() {
         List<Object[]> results =new ArrayList<Object[]>();
         Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         try  {
             // start a transaction
             transaction = session.beginTransaction();
@@ -70,7 +81,7 @@ public class ChiTietDonHangDao_impl extends GenericDao_impl<Integer, ChiTietDonH
 
     @Override
     public List<ChiTietDonHangEntity> FindSpecify() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
         List<ChiTietDonHangEntity> userEntities = new ArrayList<ChiTietDonHangEntity>();
         try {
@@ -91,7 +102,7 @@ public class ChiTietDonHangDao_impl extends GenericDao_impl<Integer, ChiTietDonH
 
     @Override
     public List<ChiTietDonHangEntity> FindDetails(Integer id) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
         List<ChiTietDonHangEntity> userEntities = new ArrayList<ChiTietDonHangEntity>();
         try {

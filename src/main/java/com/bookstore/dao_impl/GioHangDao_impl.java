@@ -3,17 +3,22 @@ package com.bookstore.dao_impl;
 import com.bookstore.dao.GioHangDao;
 import com.bookstore.entity.CuonSachEntity;
 import com.bookstore.entity.GioHangEntity;
-import com.bookstore.utils.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class GioHangDao_impl extends GenericDao_impl<Integer, GioHangEntity> implements GioHangDao {
+    @Autowired
+    SessionFactory factory;
     @Override
     public GioHangEntity GetOrder(CuonSachEntity C) {
         GioHangEntity gioHangEntity = new GioHangEntity();
@@ -25,7 +30,7 @@ public class GioHangDao_impl extends GenericDao_impl<Integer, GioHangEntity> imp
     public List<GioHangEntity> FindByMaCustomer(int id) {
         List<GioHangEntity> results =new ArrayList<GioHangEntity>();
         Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         try  {
             // start a transaction
             transaction = session.beginTransaction();
@@ -55,7 +60,7 @@ public class GioHangDao_impl extends GenericDao_impl<Integer, GioHangEntity> imp
     public Integer DeletebyCustomer_CuonSach(int ma_Customer, int ma_CuonSach) {
         int result =0;
         Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         try  {
             // start a transaction
             transaction = session.beginTransaction();
@@ -84,7 +89,7 @@ public class GioHangDao_impl extends GenericDao_impl<Integer, GioHangEntity> imp
     public Integer DeletebyCustomer(int ma_Customer) {
         int result =0;
         Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         try  {
             // start a transaction
             transaction = session.beginTransaction();
@@ -114,7 +119,7 @@ public class GioHangDao_impl extends GenericDao_impl<Integer, GioHangEntity> imp
         LocalDateTime now = LocalDateTime.now();
         List<Object[]> results =new ArrayList<Object[]>();
         Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         try  {
             // start a transaction
             transaction = session.beginTransaction();

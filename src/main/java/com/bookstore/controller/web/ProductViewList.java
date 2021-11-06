@@ -37,7 +37,9 @@ public class ProductViewList {
 
         CategoryService_impl categoryService =new CategoryService_impl();
         List<CategoryEntity> categoryList = categoryService.findAll();
-        NavigationDao_impl<CuonSachEntity> navigationDaoImpl = new NavigationDao_impl<CuonSachEntity>(Integer.valueOf(page),maxResult,maxNavigationPage );
+        NavigationDao_impl<CuonSachEntity> navigationDaoImpl = new NavigationDao_impl<CuonSachEntity>();
+        navigationDaoImpl.Navigation(Integer.valueOf(page),maxResult,maxNavigationPage );
+
         List<CuonSachEntity> productList_km = new ArrayList<CuonSachEntity>();
         List<CuonSachEntity> productListCurrent = new ArrayList<CuonSachEntity>();
         List<CuonSachEntity> productListCurrent_km = new ArrayList<CuonSachEntity>();
