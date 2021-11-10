@@ -4,25 +4,24 @@ import com.bookstore.service.ChiTietDonHangService;
 import com.bookstore.service.GioHangService;
 import com.bookstore.service_impl.ChiTietDonHangService_impl;
 import com.bookstore.service_impl.GioHangService_impl;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/admin/home")
-public class AdminHomeController extends HttpServlet {
+@Controller
+@RequestMapping("/admin/")
+public class AdminHomeController{
     public AdminHomeController(){
         super();
     }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    @RequestMapping("home")
+    public String doGet(ModelMap model) {
         GioHangService gioHangService= new GioHangService_impl();
         List<Object[]> ReportDoanhThu7Ngay= gioHangService.ReportDoanhThu7Ngay();
         List<Long> DoanhThu7NgayList= new ArrayList<Long>();
@@ -40,9 +39,7 @@ public class AdminHomeController extends HttpServlet {
         }
 
 
-
-
-            ChiTietDonHangService chiTietDonHangService= new ChiTietDonHangService_impl();
+        ChiTietDonHangService chiTietDonHangService= new ChiTietDonHangService_impl();
         List<Object[]> ReportDoanhThu_DauSach= chiTietDonHangService.ReportDoanhThu_DauSach();
         List<Long> DoanhThu_DauSachList= new ArrayList<Long>();
         List<String> TenDauSachList= new ArrayList<String>();
@@ -54,20 +51,16 @@ public class AdminHomeController extends HttpServlet {
             ColorList_DoanhThuDauSach.add("`rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}`,");
 
         }
-        request.setAttribute("ColorList_DoanhThuDauSach", ColorList_DoanhThuDauSach);
-        request.setAttribute("ColorList_DoanhThu7Ngay", ColorList_DoanhThu7Ngay);
+        model.addAttribute("ColorList_DoanhThuDauSach", ColorList_DoanhThuDauSach);
+        model.addAttribute("ColorList_DoanhThu7Ngay", ColorList_DoanhThu7Ngay);
 
 
-        request.setAttribute("DoanhThu_DauSachList", DoanhThu_DauSachList);
-        request.setAttribute("TenDauSachList", TenDauSachList);
-        request.setAttribute("NgayList", NgayList);
-        request.setAttribute("DoanhThu7NgayList", DoanhThu7NgayList);
+        model.addAttribute("DoanhThu_DauSachList", DoanhThu_DauSachList);
+        model.addAttribute("TenDauSachList", TenDauSachList);
+        model.addAttribute("NgayList", NgayList);
+        model.addAttribute("DoanhThu7NgayList", DoanhThu7NgayList);
 
-        RequestDispatcher rd = request.getRequestDispatcher("/views/admin/index.jsp");
-        rd.forward(request, response);
-    }
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        return "admin/index";
     }
 
 }
