@@ -28,6 +28,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Danh sách Admin</h5>
+                        <div><b> <span style="color:rgba(238,207,207,0.91)"> ${message}</span></b></div>
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead>

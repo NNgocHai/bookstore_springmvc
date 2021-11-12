@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -25,15 +26,16 @@
                         <div class="card-body">
                             <div class="card-title">Thêm Admin</div>
                             <hr>
-                            <form action="${pageContext.request.contextPath}/admin/admin/add" method="post">
-                                <div><b> <span style="color:red"> ${errorMessage}</span></b></div>
+                            <form:form action="" method="post" modelAttribute="admin">
+                                <div><b> <span style="color:rgba(238,207,207,0.91)"> ${message}</span></b></div>
                                 <div class="form-group">
-                                    <label for="input-1">Username</label>
-                                    <input type="text" class="form-control" id="input-1" placeholder="Username"  name="admin-username" required>
+                                    <label>Username</label>
+                                    <form:input type="text" class="form-control" path="taikhoan_Admin"/>
+                                    <span style="color:rgba(238,207,207,0.91)"><form:errors path="taikhoan_Admin"/></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="input-2">Password</label>
-                                    <input type="password" class="form-control" id="input-2" placeholder="Password" name="admin-password" required>
+                                    <label >Password</label>
+                                    <form:input type="password" class="form-control" path="matkhau_Admin"/>
                                     <input type="checkbox" onclick="myFunction1()">Hiển thị mật khẩu
                                     <script>function myFunction1() {
                                         var x = document.getElementById("input-2");
@@ -43,20 +45,23 @@
                                             x.type = "password";
                                         }
                                     }</script>
+                                    <span style="color:rgba(238,207,207,0.91)"><form:errors path="matkhau_Admin"/></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="input-3">Tên Admin</label>
-                                    <input type="text" class="form-control" id="input-3" placeholder="Tên Admin" name="admin-name" required>
+                                    <label>Tên Admin</label>
+                                    <form:input type="text" class="form-control" path="hoten_Admin"/>
+                                    <form:errors path="hoten_Admin"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="input-4">Email</label>
-                                    <input type="email" class="form-control" id="input-4" placeholder="Email" name="admin-email" required>
+                                    <label>Email</label>
+                                    <form:input type="email" class="form-control" path="gmail_Admin"/>
+                                    <span style="color:rgba(238,207,207,0.91)"><form:errors path="gmail_Admin"/></span>
                                 </div>
                                 <div class="form-footer">
-                                    <button type="reset" class="btn btn-danger"><i class="fa fa-times"></i><a href="${pageContext.request.contextPath}/admin/admin/list">Hủy</a></button>
-                                    <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> Thêm</button>
+                                    <button type="reset" class="btn btn-danger"><a href="${pageContext.request.contextPath}/admin/admin/list">Hủy</a></button>
+                                    <input type="submit"  value="Thêm" name="add" class="btn btn-success"/>
                                 </div>
-                            </form>
+                            </form:form>
                         </div>
                     </div>
                 </div>

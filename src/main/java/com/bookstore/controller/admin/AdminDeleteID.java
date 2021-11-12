@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class AdminDeleteID {
     @RequestMapping("admin/delete")
     public String doGet(@RequestParam("admin-id") int admin_idd,
                         HttpSession session,
+                        final RedirectAttributes redirectAttributes,
                         ModelMap model) {
 
         AdminService admin = new AdminService_impl();
@@ -31,7 +33,8 @@ public class AdminDeleteID {
                 listId.add(admin_idd);
                 admin.deleteList(listId);
                 model.addAttribute("adminList", admin.findAll());
-
+                String message= "Xóa thành công";
+                redirectAttributes.addFlashAttribute("message", message);
                 return "redirect:/admin/admin/list";
             }
             else
