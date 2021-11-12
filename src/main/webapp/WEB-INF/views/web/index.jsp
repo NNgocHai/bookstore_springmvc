@@ -23,7 +23,6 @@
                             <p data-seq style="color: black"><b>Một cuốn sách dù dở đến đâu ta cũng thu lượm được vài điều đặc biệt của nó.</b></p>
                             <a data-seq href="${pageContext.request.contextPath}/web/product"
                                class="aa-shop-now-btn aa-secondary-btn">Xem Sách</a>
-
                         </div>
                     </li>
                     <!-- single slide item -->
