@@ -1,5 +1,8 @@
 package com.bookstore.controller.admin;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,20 +12,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/admin/logout")
-public class AdminLogout extends HttpServlet {
+@Controller
+@RequestMapping("/admin/")
+public class AdminLogout {
     private static final long serialVersionUID = 1L;
 
     public AdminLogout() {
         super();
     }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
+
+    @RequestMapping("logout")
+    public String doGet(HttpSession session){
+
         session.removeAttribute("user_admin");
         session.removeAttribute("password_admin");
 
         session.invalidate();
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/admin/login.jsp");
-        dispatcher.forward(request, response);
+
+        return "admin/login";
     }
 }

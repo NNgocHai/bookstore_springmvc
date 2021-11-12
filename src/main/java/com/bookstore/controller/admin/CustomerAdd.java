@@ -3,6 +3,11 @@ package com.bookstore.controller.admin;
 import com.bookstore.entity.CustomerEntity;
 import com.bookstore.service.CustomerService;
 import com.bookstore.service_impl.CustomerService_impl;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,26 +18,28 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/admin/user/add")
-public class CustomerAdd  extends HttpServlet {
+@Controller
+@RequestMapping("/admin/")
+public class CustomerAdd  {
     public CustomerAdd() {
         super();
     }
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/views/admin/adduser.jsp");
-        dispatcher.forward(request, response);
+
+    @RequestMapping(value = "user/add", method = RequestMethod.GET)
+    public String addUserForm(){
+
+        return "admin/adduser";
     }
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=UTF-8");
-        String customer_tk = request.getParameter("customer-username");
-        String customer_password = request.getParameter("customer-password");
-        String customer_name = request.getParameter("customer-name");
-        String customer_gmail = request.getParameter("customer-email");
-        String customer_sdt = request.getParameter("customer-sdt");
-        String customer_vitien = request.getParameter("customer-vitien");
+
+    @RequestMapping(value = "user/add", method = RequestMethod.POST)
+    public String addUser(@RequestParam("customer-username") String customer_tk,
+                          @RequestParam("customer-password") String customer_password,
+                          @RequestParam("customer-name") String customer_name,
+                          @RequestParam("customer-email") String customer_gmail,
+                          @RequestParam("customer-sdt") String customer_sdt,
+                          @RequestParam("customer-vitien") String customer_vitien,
+                          ModelMap model,
+                          PrintWriter out) {
 
         try{
             if((!customer_tk.equals("")) && (!customer_password.equals("")) && (!customer_name.equals(""))&& (!customer_gmail.equals("")) && (!customer_sdt.equals(""))&& (!customer_vitien.equals(""))) {
@@ -45,24 +52,24 @@ public class CustomerAdd  extends HttpServlet {
                 customerEntity.setVitien(Integer.valueOf(customer_vitien));
                 CustomerService customer = new CustomerService_impl();
                 customer.save(customerEntity);
-                response.sendRedirect(request.getContextPath() + "/admin/user/list");
+
+                return "redirect:/admin/user/list";
             }
             else {
-                request.setAttribute("errorMessage", "Vui lòng điền đầy đủ các thông tin");
-                request.setAttribute("customer_tk",customer_tk);
-                request.setAttribute("customer_password",customer_password);
-                request.setAttribute("customer_name",customer_name);
-                request.setAttribute("customer_gmail",customer_gmail);
-                request.setAttribute("customer_sdt",customer_sdt);
-                request.setAttribute("customer_vitien",customer_vitien);
-                RequestDispatcher rd = request.getRequestDispatcher("/views/admin/adduser.jsp");
-                rd.forward(request, response);
+                model.addAttribute("errorMessage", "Vui lòng điền đầy đủ các thông tin");
+                model.addAttribute("customer_tk",customer_tk);
+                model.addAttribute("customer_password",customer_password);
+                model.addAttribute("customer_name",customer_name);
+                model.addAttribute("customer_gmail",customer_gmail);
+                model.addAttribute("customer_sdt",customer_sdt);
+                model.addAttribute("customer_vitien",customer_vitien);
+
+                return "admin/adduser";
             }
         }
         catch (Exception e)
         {
-            PrintWriter out = response.getWriter();
-            out.print("<%@ page contentType=\"text/html;charset=UTF-8\" language=\"java\" %>");
+            out.println("<%@ page contentType=\"text/html;charset=UTF-8\" language=\"java\" %>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Loi</title>");
@@ -76,5 +83,7 @@ public class CustomerAdd  extends HttpServlet {
             out.println("</html>");
             out.close();
         }
+
+        return "redirect:/admin/user/list";
     }
 }

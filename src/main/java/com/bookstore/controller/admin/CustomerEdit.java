@@ -2,52 +2,52 @@ package com.bookstore.controller.admin;
 
 import com.bookstore.entity.CustomerEntity;
 import com.bookstore.service_impl.CustomerService_impl;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/admin/user/edit")
-
-public class CustomerEdit extends HttpServlet {
+@Controller
+@RequestMapping("/admin/")
+public class CustomerEdit  {
     public CustomerEdit() {
         super();
     }
 
     CustomerService_impl customer = new CustomerService_impl();
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @RequestMapping(value = "user/edit", method = RequestMethod.GET)
+    public String editForm(@RequestParam("id") String userid,
+                           ModelMap model) {
 
-        int id= Integer.parseInt(request.getParameter("id"));
+        int id= Integer.parseInt(userid);
         CustomerEntity customerEntity = customer.findById(id);
-        request.setAttribute("customer", customerEntity);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/admin/edituser.jsp");
-        dispatcher.forward(request, response);
+        model.addAttribute("customer", customerEntity);
+
+        return "admin/edituser";
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=UTF-8");
+    @RequestMapping(value = "user/edit", method = RequestMethod.POST)
+    public String editUser(@RequestParam("id") String id,
+                           @RequestParam("customer-username") String customer_tk,
+                           @RequestParam("customer-password") String customer_password,
+                           @RequestParam("customer-name") String customer_name,
+                           @RequestParam("customer-email") String customer_gmail,
+                           @RequestParam("customer-sdt") String customer_sdt,
+                           @RequestParam("customer-vitien") String customer_vitien,
+                           ModelMap model,
+                           PrintWriter out) {
 
-        String id = (request.getParameter("id"));
 
-        String customer_tk = request.getParameter("customer-username");
-        String customer_password = request.getParameter("customer-password");
-        String customer_name = request.getParameter("customer-name");
-        String customer_gmail = request.getParameter("customer-email");
-        String customer_sdt = request.getParameter("customer-sdt");
-        String customer_vitien = request.getParameter("customer-vitien");
         try {
-            if(!id.equals("")&&(!customer_tk.equals("")&&(!customer_password.equals(""))&&(!customer_name.equals(""))&&(!customer_gmail.equals(""))&&(!customer_sdt.equals(""))
-            &&(!customer_vitien.equals(""))))
-            {
+            if(!id.equals("") && (!customer_tk.equals("") &&
+                    (!customer_password.equals("")) && (!customer_name.equals("")) &&
+                    (!customer_gmail.equals("")) && (!customer_sdt.equals("")) &&
+                    (!customer_vitien.equals("")))) {
+
                 CustomerEntity customerEntity = new CustomerEntity();
                 customerEntity.setMa_Customer(Integer.parseInt(id));
                 customerEntity.setTaikhoan_Customer(customer_tk);
@@ -57,24 +57,24 @@ public class CustomerEdit extends HttpServlet {
                 customerEntity.setSdt_Customer(customer_sdt);
                 customerEntity.setVitien(Integer.valueOf(customer_vitien));
                 customer.update(customerEntity);
-                response.sendRedirect(request.getContextPath() + "/admin/user/list");
+
+                return "redirect:/admin/user/list";
             }
             else {
-                request.setAttribute("errorMessage", "Vui lòng điền đầy đủ các thông tin");
-                request.setAttribute("id",id);
-                request.setAttribute("customer_tk",customer_tk);
-                request.setAttribute("customer_password",customer_password);
-                request.setAttribute("customer_name",customer_name);
-                request.setAttribute("customer_gmail",customer_gmail);
-                request.setAttribute("customer_sdt",customer_sdt);
-                request.setAttribute("customer_vitien",customer_vitien);
-                RequestDispatcher rd = request.getRequestDispatcher("/views/admin/edituser.jsp");
-                rd.forward(request, response);
+                model.addAttribute("errorMessage", "Vui lòng điền đầy đủ các thông tin");
+                model.addAttribute("id",id);
+                model.addAttribute("customer_tk",customer_tk);
+                model.addAttribute("customer_password",customer_password);
+                model.addAttribute("customer_name",customer_name);
+                model.addAttribute("customer_gmail",customer_gmail);
+                model.addAttribute("customer_sdt",customer_sdt);
+                model.addAttribute("customer_vitien",customer_vitien);
+
+                return "admin/edituser";
             }
         }
         catch (Exception e)
         {
-            PrintWriter out = response.getWriter();
             out.print("<%@ page contentType=\"text/html;charset=UTF-8\" language=\"java\" %>");
             out.println("<html>");
             out.println("<head>");
@@ -89,5 +89,6 @@ public class CustomerEdit extends HttpServlet {
             out.println("</html>");
             out.close();
         }
+        return "redirect:/admin/user/list";
     }
 }

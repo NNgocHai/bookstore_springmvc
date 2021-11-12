@@ -2,6 +2,11 @@ package com.bookstore.controller.admin;
 import com.bookstore.entity.CategoryEntity;
 import com.bookstore.service.CategoryService;
 import com.bookstore.service_impl.CategoryService_impl;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,38 +18,38 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 
-@WebServlet("/admin/cate/add")
-public class CategoryAdd extends HttpServlet {
+@Controller
+@RequestMapping("/admin/")
+public class CategoryAdd {
     public CategoryAdd(){super();}
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher=this.getServletContext().getRequestDispatcher("/views/admin/addcategory.jsp");
-        dispatcher.forward(request,response);
+    @RequestMapping(value = "cate/add", method = RequestMethod.GET)
+    public String addCateForm() {
+
+        return "admin/addcategory";
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=UTF-8");
-        String category_name = request.getParameter("category-name");
+    @RequestMapping(value = "cate/add", method = RequestMethod.POST)
+    public String addCate(@RequestParam("category-name") String category_name,
+                         ModelMap model,
+                         PrintWriter out) {
+
         try{
             if((!category_name.equals("")) ) {
                 CategoryEntity categoryEntity = new CategoryEntity();
                 categoryEntity.setTen_DauSach(category_name);
                 CategoryService category = new CategoryService_impl();
                 category.save(categoryEntity);
-                response.sendRedirect(request.getContextPath() + "/admin/cate/list");
+
+                return "redirect:/admin/cate/list";
             }
             else {
-                request.setAttribute("errorMessage", "Tên đầu sách trống");
-                RequestDispatcher rd = request.getRequestDispatcher("/views/admin/addcategory.jsp");
-                rd.forward(request, response);
+                model.addAttribute("errorMessage", "Tên đầu sách trống");
+                return "admin/addcategory";
             }
         }
         catch (Exception e)
         {
-            PrintWriter out = response.getWriter();
             out.print("<%@ page contentType=\"text/html;charset=UTF-8\" language=\"java\" %>");
             out.println("<html>");
             out.println("<head>");
@@ -59,5 +64,6 @@ public class CategoryAdd extends HttpServlet {
             out.println("</html>");
             out.close();
         }
+        return "redirect:/admin/cate/list";
     }
 }
