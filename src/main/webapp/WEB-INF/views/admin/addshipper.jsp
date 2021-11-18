@@ -5,6 +5,7 @@
   Time: 1:11 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
@@ -31,15 +32,17 @@
                     <div class="card-body">
                         <div class="card-title">Thêm Shipper</div>
                         <hr>
-                        <form action="${pageContext.request.contextPath}/admin/ship/add" method="post">
-                            <div><b> <span style="color:red"> ${errorMessage}</span></b></div>
+                        <form:form action="" method="post" modelAttribute="shipper">
+                            <div><b> <span style="color:red"> ${message}</span></b></div>
                             <div class="form-group">
-                                <label for="input-1">Username</label>
-                                <input type="text" class="form-control" id="input-1" placeholder="Username"  name="shipper-username" value="${shipper_tk}">
+                                <label >Username</label>
+                                <form:input type="text" class="form-control" path="taikhoan_Shipper"/>
+                            <span style="color:rgba(238,207,207,0.91)"><form:errors path="taikhoan_Shipper"/></span>
                             </div>
                             <div class="form-group">
-                                <label for="input-2">Password</label>
-                                <input type="password" class="form-control" id="input-2" placeholder="Password" name="shipper-password" value="${shipper_password}">
+                                <label >Password</label>
+                                <form:input type="password"  id="input-2" class="form-control" path="matkhau_Shipper"/>
+
                                 <input type="checkbox" onclick="myFunction1()">Hiển thị mật khẩu
                                 <script>function myFunction1() {
                                     var x = document.getElementById("input-2");
@@ -49,20 +52,23 @@
                                         x.type = "password";
                                     }
                                 }</script>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="matkhau_Shipper"/></span>
                             </div>
                             <div class="form-group">
-                                <label for="input-3">Họ và tên</label>
-                                <input type="text" class="form-control" id="input-3" placeholder="Họ và tên Shipper" name="shipper-name" value="${shipper_name}">
+                                <label >Họ và tên</label>
+                                <form:input type="text" class="form-control" path="hoten_Shipper"/>
+                                <form:errors path="hoten_Shipper"/>
                             </div>
                             <div class="form-group">
-                                <label for="input-4">Email</label>
-                                <input type="email" class="form-control" id="input-4" placeholder="Email" name="shipper-email" value="${shipper_gmail}">
+                                <label>Email</label>
+                                <form:input type="email" class="form-control" path="gmail_Shipper"/>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="gmail_Shipper"/></span>
                             </div>
                             <div class="form-footer">
                                 <button type="reset" class="btn btn-danger"><i class="fa fa-times"></i><a href="${pageContext.request.contextPath}/admin/ship/list">Hủy</a></button>
-                                <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> Thêm</button>
+                            <input type="submit"  value="Thêm" name="add" class="btn btn-success"/>
                             </div>
-                        </form>
+                        </form:form>
                     </div>
                 </div>
             </div>

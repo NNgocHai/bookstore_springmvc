@@ -3,65 +3,62 @@ package com.bookstore.controller.admin;
 import com.bookstore.entity.ShipperEntity;
 import com.bookstore.service.ShipperService;
 import com.bookstore.service_impl.ShipperService_impl;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import java.io.PrintWriter;
 
-@WebServlet("/admin/ship/edit")
-public class ShipperEdit extends HttpServlet {
-    ShipperService shipper = new ShipperService_impl();
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id= Integer.parseInt(request.getParameter("id"));
-        ShipperEntity shipperEntity = shipper.findById(id);
-        request.setAttribute("shipper", shipperEntity);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/admin/editshipper.jsp");
-        dispatcher.forward(request, response);
+
+@Controller
+@RequestMapping("/admin/")
+public class ShipperEdit {
+    public ShipperEdit() {
+        super();
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=UTF-8");
+    ShipperService shipperService = new ShipperService_impl();
 
-        int id = Integer.parseInt(request.getParameter("id"));
-        String id_string=request.getParameter("id");
-        String shipper_tk = request.getParameter("shipper-username");
-        String shipper_password = request.getParameter("shipper-password");
-        String shipper_name = request.getParameter("shipper-name");
-        String shipper_gmail = request.getParameter("shipper-email");
+    @RequestMapping(value = "ship/edit", method = RequestMethod.GET)
+    public String doGet(ModelMap model, @RequestParam(value = "shipper_id", required = false) String shipper_id) {
+        int id = Integer.parseInt(shipper_id);
+        ShipperEntity shipper = shipperService.findById(id);
+        model.addAttribute("shipper", shipper);
+        return "admin/editshipper";
+    }
+
+    @RequestMapping(value = "ship/edit", method = RequestMethod.POST)
+    public String doPost(ModelMap model, @RequestParam(value = "id", required = false) String shipper_id,
+                         @RequestParam(value = "shipper_username", required = false) String shipper_username,
+                         @RequestParam(value = "shipper_password", required = false) String shipper_password,
+                         @RequestParam(value = "shipper_name", required = false) String shipper_name,
+                         @RequestParam(value = "shipper_gmail", required = false) String shipper_gmail,
+                         PrintWriter out) {
+
+
         try {
-            if(!id_string.equals("")&&(!shipper_tk.equals("")&&(!shipper_tk.equals(""))&&(!shipper_name.equals(""))&&(!shipper_gmail.equals(""))))
-            {
+            if (!shipper_id.equals("") && (!shipper_username.equals("") && (!shipper_password.equals("")) && (!shipper_name.equals("")) && (!shipper_gmail.equals("")))) {
                 ShipperEntity shipperEntity = new ShipperEntity();
-                shipperEntity.setMa_Shipper(id);
-                shipperEntity.setTaikhoan_Shipper(shipper_tk);
+                shipperEntity.setMa_Shipper(Integer.parseInt(shipper_id));
+                shipperEntity.setTaikhoan_Shipper(shipper_username);
                 shipperEntity.setGmail_Shipper(shipper_gmail);
                 shipperEntity.setHoten_Shipper(shipper_name);
                 shipperEntity.setMatkhau_Shipper(shipper_password);
-                shipper.update(shipperEntity);
-                response.sendRedirect(request.getContextPath() + "/admin/ship/list");
+                shipperService.update(shipperEntity);
+                return "redirect:/admin/ship/list";
+            } else {
+                model.addAttribute("errorMessage", "Vui lòng điền đầy đủ các thông tin");
+                model.addAttribute("id", shipper_id);
+                model.addAttribute("shipper_username", shipper_username);
+                model.addAttribute("shipper_password", shipper_password);
+                model.addAttribute("shipper_name", shipper_name);
+                model.addAttribute("shipper_gmail", shipper_gmail);
+                return "admin/editshipper";
+
             }
-            else {
-                request.setAttribute("errorMessage", "Vui lòng điền đầy đủ các thông tin");
-                request.setAttribute("id",id_string);
-                request.setAttribute("shipper_tk",shipper_tk);
-                request.setAttribute("shipper_password",shipper_password);
-                request.setAttribute("shipper_name",shipper_name);
-                request.setAttribute("shipper_gmail",shipper_gmail);
-                RequestDispatcher rd = request.getRequestDispatcher("/views/admin/editshipper.jsp");
-                rd.forward(request, response);
-            }
-        }
-        catch (Exception e)
-        {
-            PrintWriter out = response.getWriter();
+        } catch (Exception e) {
+            out.flush();
             out.print("<%@ page contentType=\"text/html;charset=UTF-8\" language=\"java\" %>");
             out.println("<html>");
             out.println("<head>");
@@ -70,11 +67,12 @@ public class ShipperEdit extends HttpServlet {
             out.println("<body>");
             out.println("<script>");
             out.println("alert('Trung tai khoan hoac gmail hoac so dien thoai')");
-            out.println("location.href = './edit?id="+id+"';");
+            out.println("location.href = './edit?id=" + shipper_id + "';");
             out.println("</script>");
             out.println("</body>");
             out.println("</html>");
             out.close();
         }
+        return "redirect:/admin/ship/list";
     }
 }

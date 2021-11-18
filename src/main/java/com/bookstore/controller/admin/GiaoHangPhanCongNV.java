@@ -6,6 +6,11 @@ import com.bookstore.dao_impl.DonHangDao_impl;
 import com.bookstore.dao_impl.ShipperDao_impl;
 import com.bookstore.entity.DonHangEntity;
 import com.bookstore.entity.ShipperEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,31 +22,28 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/admin/giaohang/phancong")
-public class GiaoHangPhanCongNV extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session.getAttribute("user_admin") == null){
-            response.sendRedirect(request.getContextPath() + "/admin/login");
-        }
-        else {
-            ShipperDao shipperDao = new ShipperDao_impl();
-            List<ShipperEntity> listSP= shipperDao.findAll();
-            request.setAttribute("listSP", listSP);
-            DonHangDao donHangDao = new DonHangDao_impl();
-            List<DonHangEntity> listDHCG = donHangDao.Find_DHCG();
-            request.setAttribute("listDHCG", listDHCG);
-            if (listDHCG.size() != 0) {
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/views/admin/phancongGH.jsp");
-                dispatcher.forward(request, response);
-            } else {
-                response.sendRedirect(request.getContextPath() + "/admin/giaohang/empty");
-            }
+@Controller
+
+@RequestMapping("/admin/")
+public class GiaoHangPhanCongNV {
+    public GiaoHangPhanCongNV(){super();}
+    @RequestMapping(value = "giaohang/phancong", method = RequestMethod.GET)
+    public String doGet(ModelMap model) {
+        ShipperDao shipperDao = new ShipperDao_impl();
+        List<ShipperEntity> listSP = shipperDao.findAll();
+        model.addAttribute("listSP", listSP);
+        DonHangDao donHangDao = new DonHangDao_impl();
+        List<DonHangEntity> listDHCG = donHangDao.Find_DHCG();
+        model.addAttribute("listDHCG", listDHCG);
+        if (listDHCG.size() != 0) {
+            return "admin/phancongGH";
+
+        } else {
+            return "admin/emptyDH";
         }
     }
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    @RequestMapping(value = "giaohang/phancong", method = RequestMethod.POST)
+    public String doPost() {
+        return "";
     }
 }

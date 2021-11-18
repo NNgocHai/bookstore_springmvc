@@ -1,8 +1,18 @@
 package com.bookstore.controller.admin;
 
+import com.bookstore.entity.AdminsEntity;
 import com.bookstore.entity.ShipperEntity;
+import com.bookstore.service.AdminService;
 import com.bookstore.service.ShipperService;
+import com.bookstore.service_impl.AdminService_impl;
 import com.bookstore.service_impl.ShipperService_impl;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,60 +23,53 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/admin/ship/add")
-public class ShipperAdd extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher=this.getServletContext().getRequestDispatcher("/views/admin/addshipper.jsp");
-        dispatcher.forward(request,response);
+@Controller
+@RequestMapping("/admin/")
+public class ShipperAdd  {
+    public ShipperAdd() {
+        super();
+    }
+    @RequestMapping(value = "ship/add", method = RequestMethod.GET)
+    public String doGet(ModelMap model,
+                         @RequestParam(value = "message", required = false) String message){
+        model.addAttribute("shipper", new ShipperEntity());
+        model.addAttribute("message", message);
+        return "admin/addshipper";
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=UTF-8");
-        String shipper_tk = request.getParameter("shipper-username");
-        String shipper_password = request.getParameter("shipper-password");
-        String shipper_name = request.getParameter("shipper-name");
-        String shipper_gmail = request.getParameter("shipper-email");
+    @RequestMapping(value = "ship/add", method = RequestMethod.POST)
+    public String doPost(@ModelAttribute("shipper") ShipperEntity shipper,
+                         ModelMap model, BindingResult errors) {
 
-        try{
-            if((!shipper_tk.equals("")) && (!shipper_password.equals("")) && (!shipper_name.equals(""))&& (!shipper_gmail.equals(""))) {
-                ShipperEntity shipperEntity = new ShipperEntity();
-                shipperEntity.setTaikhoan_Shipper(shipper_tk);
-                shipperEntity.setGmail_Shipper(shipper_gmail);
-                shipperEntity.setHoten_Shipper(shipper_name);
-                shipperEntity.setMatkhau_Shipper(shipper_password);
-                ShipperService shipper = new ShipperService_impl();
-                shipper.save(shipperEntity);
-                response.sendRedirect(request.getContextPath() + "/admin/ship/list");
-            }
-            else {
-                request.setAttribute("errorMessage", "Vui lòng điền đầy đủ các thông tin");
-                request.setAttribute("shipper_tk",shipper_tk);
-                request.setAttribute("shipper_password",shipper_password);
-                request.setAttribute("shipper_name",shipper_name);
-                request.setAttribute("shipper_gmail",shipper_gmail);
-                RequestDispatcher rd = request.getRequestDispatcher("/views/admin/addshipper.jsp");
-                rd.forward(request, response);
-            }
+        if (shipper.getGmail_Shipper().trim().length() == 0) {
+            errors.rejectValue("gmail_Shipper", "shipper", "Vui lòng nhập gmail!");
         }
-        catch (Exception e)
-        {
-            PrintWriter out = response.getWriter();
-            out.print("<%@ page contentType=\"text/html;charset=UTF-8\" language=\"java\" %>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Loi</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<script>");
-            out.println("alert('Trung tai khoan hoac gmail')");
-            out.println("location.href = \"./add\";");
-            out.println("</script>");
-            out.println("</body>");
-            out.println("</html>");
-            out.close();
+        if (shipper.getHoten_Shipper().trim().length() == 0) {
+            errors.rejectValue("hoten_Shipper", "shipper", "Vui lòng nhập tên!");
         }
+        if (shipper.getMatkhau_Shipper().trim().length() == 0) {
+            errors.rejectValue("matkhau_Shipper", "shipper", "Vui lòng nhập mật khẩu!");
+        }
+        if (shipper.getTaikhoan_Shipper().trim().length() == 0) {
+            errors.rejectValue("taikhoan_Shipper", "shipper", "Vui lòng nhập tài khoàn!");
+        }
+        if (errors.hasErrors()) {
+            model.addAttribute("shipper", shipper);
+            model.addAttribute("message", "Vui lòng sửa các lỗi sau đây!");
+            return "admin/addshipper";
+        }
+        try {
+            ShipperService shipperService = new ShipperService_impl();
+            model.addAttribute("message", "Thêm thành công!");
+            shipperService.save(shipper);
+            return "admin/addshipper";
+        } catch (Exception e) {
+            model.addAttribute("shipper", shipper);
+            model.addAttribute("message", "Thêm thất bại!");
+            return "admin/addshipper";
+        }
+
+
+
     }
 }

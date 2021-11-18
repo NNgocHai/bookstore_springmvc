@@ -5,7 +5,7 @@
   Time: 2:25 PM
   To change this template use File | Settings | File Templates.
 --%>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
@@ -32,45 +32,53 @@
                     <div class="card-body">
                         <div class="card-title">Thêm Cuốn sách</div>
                         <hr>
-                        <form action="${pageContext.request.contextPath}/admin/product/add" method="post">
-                            <div><b> <span style="color:red"> ${errorMessage}</span></b></div>
+                        <form:form action="" method="post" modelAttribute="product">
+                            <div><b> <span style="color:red"> ${message}</span></b></div>
                             <div class="form-group">
-                                <label for="input-1">Mã đầu sách</label>
-                                <input type="text" class="form-control" id="input-1" placeholder="Mã đầu sách"  name="cuonsach-maDS" required>
+                                <label>Mã đầu sách</label>
+                                <form:input type="text" class="form-control" path="ma_DauSach"/>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="ma_DauSach"/></span>
                             </div>
                             <div class="form-group">
-                                <label for="input-2">Tên cuốn sách</label>
-                                <input type="text" class="form-control" id="input-2" placeholder="Tên cuốn sách" name="cuonsach-ten" required >
+                                <label>Tên cuốn sách</label>
+                                <form:input type="text" class="form-control" path="ten_CuonSach"/>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="ten_CuonSach"/></span>
                             </div>
                             <div class="form-group">
-                                <label for="input-3">Tác giả</label>
-                                <input type="text" class="form-control" id="input-3" placeholder="Tác giả" name="cuonsach-tacgia" required>
+                                <label>Tác giả</label>
+                                <form:input type="text" class="form-control" path="tacgia"/>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="tacgia"/></span>
                             </div>
                             <div class="form-group">
-                                <label for="input-4">Số lượng</label>
-                                <input type="text" class="form-control" id="input-4" placeholder="Số lượng" name="cuonsach-soluong" required>
+                                <label>Số lượng</label>
+                                <form:input type="text" class="form-control" path="soluong"/>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="soluong"/></span>
                             </div>
                             <div class="form-group">
-                                <label for="input-6">Ảnh cuốn sách</label>
-                                <input type="text" class="form-control" id="input-6" placeholder="Ảnh cuốn sách" name="cuonsach-anhCS" required>
+                                <label>Ảnh cuốn sách</label>
+                                <form:input type="text" class="form-control" path="anh_CuonSach"/>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="anh_CuonSach"/></span>
                             </div>
                             <div class="form-group">
-                                <label for="input-7">Discount</label>
-                                <input type="text" class="form-control" id="input-7" placeholder="Discount" name="cuonsach-discount" required>
+                                <label>Discount</label>
+                                <form:input type="text" class="form-control" path="discount"/>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="discount"/></span>
                             </div>
                             <div class="form-group">
-                                <label for="input-8">Giá bán</label>
-                                <input type="text" class="form-control" id="input-8" placeholder="Giá bán" name="cuonsach-giaban" required>
+                                <label>Giá bán</label>
+                                <form:input type="text" class="form-control" path="giabia"/>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="giabia"/></span>
                             </div>
                             <div class="form-group">
-                                <label for="input-9">Mô tả</label>
-                                <textarea type="text" class="form-control" id="input-9" placeholder="Mô tả" name="cuonsach-mota" required></textarea>
+                                <label>Mô tả</label>
+                                <form:textarea type="text" class="form-control" path="mota"/>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="mota"/></span>
                             </div>
                             <div class="form-footer">
                                 <button type="reset" class="btn btn-danger"><i class="fa fa-times"></i><a href="${pageContext.request.contextPath}/admin/product/list">Hủy</a></button>
                                 <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> Thêm</button>
                             </div>
-                        </form>
+                        </form:form>
                     </div>
                 </div>
             </div>

@@ -1,8 +1,18 @@
 package com.bookstore.controller.admin;
 
 import com.bookstore.entity.CuonSachEntity;
+import com.bookstore.entity.ShipperEntity;
 import com.bookstore.service.ProductService;
+import com.bookstore.service.ShipperService;
 import com.bookstore.service_impl.ProductService_impl;
+import com.bookstore.service_impl.ShipperService_impl;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,74 +23,61 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/admin/product/add")
-public class ProductAdd extends HttpServlet {
+@Controller
+@RequestMapping("/admin/")
+public class ProductAdd {
     public ProductAdd(){super();}
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher=this.getServletContext().getRequestDispatcher("/views/admin/addcuonsach.jsp");
-        dispatcher.forward(request,response);
+    @RequestMapping(value = "product/add", method = RequestMethod.GET)
+    public String doGet(ModelMap model, @RequestParam(value = "errorMessage", required = false) String message) {
+        model.addAttribute("product", new CuonSachEntity());
+        model.addAttribute("errorMessage", message);
+        return "admin/addcuonsach";
+
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=UTF-8");
-        String cuonsach_ten = request.getParameter("cuonsach-ten");
-        String cuonsach_maDS = request.getParameter("cuonsach-maDS");
-        String cuonsach_tacgia = request.getParameter("cuonsach-tacgia");
-        String cuonsach_soluong = request.getParameter("cuonsach-soluong");
-        String cuonsach_giaban = request.getParameter("cuonsach-giaban");
-        String cuonsach_anhCS = request.getParameter("cuonsach-anhCS");
-        String cuonsach_discount = request.getParameter("cuonsach-discount");
-        String cuonsach_mota=request.getParameter("cuonsach-mota");
-        try{
-            if((!cuonsach_ten.equals("")) && (!cuonsach_maDS.equals("")) && (!cuonsach_tacgia.equals("")) && (!cuonsach_soluong.equals("")) &&(!cuonsach_giaban.equals(""))&&
-                    (!cuonsach_discount.equals(""))) {
-                CuonSachEntity cuonSachEntity = new CuonSachEntity();
-                cuonSachEntity.setTen_CuonSach(cuonsach_ten);
-                cuonSachEntity.setMa_DauSach(Integer.parseInt(cuonsach_maDS));
-                cuonSachEntity.setGiabia(Integer.parseInt(cuonsach_giaban));
-                cuonSachEntity.setSoluong(Integer.parseInt(cuonsach_soluong));
-                cuonSachEntity.setTacgia(cuonsach_tacgia);
-                cuonSachEntity.setAnh_CuonSach(cuonsach_anhCS);
-                cuonSachEntity.setDiscount(Integer.parseInt(cuonsach_discount));
-                cuonSachEntity.setMota(cuonsach_mota);
-                ProductService cuonsach = new ProductService_impl();
-                cuonsach.save(cuonSachEntity);
-                response.sendRedirect(request.getContextPath() + "/admin/product/list");
-            }
-            else {
-                request.setAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin");
-                request.setAttribute("madausach",cuonsach_maDS);
-                request.setAttribute("tencuonsach",cuonsach_ten);
-                request.setAttribute("tacgia",cuonsach_tacgia);
-                request.setAttribute("soluong",cuonsach_soluong);
-                request.setAttribute("anhcuonsach",cuonsach_anhCS);
-                request.setAttribute("discount",cuonsach_discount);
-                request.setAttribute("giaban",cuonsach_giaban);
-                RequestDispatcher rd = request.getRequestDispatcher("/views/admin/addcuonsach.jsp");
-                rd.forward(request, response);
-            }
-
+    @RequestMapping(value = "product/add", method = RequestMethod.POST)
+    public String doPost(@ModelAttribute("product") CuonSachEntity product,
+                         ModelMap model, BindingResult errors) {
+        if (product.getMa_DauSach()== null) {
+            errors.rejectValue("ma_DauSach", "product", "Vui lòng nhập mã đầu sách!");
         }
-        catch (Exception e)
-        {
-            PrintWriter out = response.getWriter();
-            out.print("<%@ page contentType=\"text/html;charset=UTF-8\" language=\"java\" %>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Loi</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<script>");
-            out.println("alert('Không có mã đầu sách này')");
-            out.println("location.href = \"./add\";");
-            out.println("</script>");
-            out.println("</body>");
-            out.println("</html>");
-            out.close();
+        if (product.getTen_CuonSach().toString().trim().length() == 0) {
+            errors.rejectValue("ten_CuonSach", "product", "Vui lòng nhập tên sách!");
+        }
+        if (product.getGiabia() == null) {
+            errors.rejectValue("giabia", "product", "Vui lòng nhập giá!");
+        }
+        if (product.getSoluong()== null) {
+            errors.rejectValue("soluong", "product", "Vui lòng nhập số lượng!");
+        }
+        if (product.getTacgia().toString().trim().length() == 0) {
+            errors.rejectValue("tacgia", "product", "Vui lòng nhập tên tác giả!");
+        }
+        if (product.getAnh_CuonSach().toString().trim().length() == 0) {
+            errors.rejectValue("anh_CuonSach", "product", "Vui lòng nhập ảnh!");
+        }
+        if (product.getDiscount()== null) {
+            errors.rejectValue("discount", "product", "Vui lòng nhập discount!");
+        }
+        if (product.getMota().toString().trim().length() == 0) {
+            errors.rejectValue("mota", "product", "Vui lòng nhập mô tả!");
+        }
+        if (errors.hasErrors()) {
+            model.addAttribute("product", product);
+            model.addAttribute("message", "Vui lòng sửa các lỗi sau đây!");
+            return "admin/addcuonsach";
+        }
+
+        try {
+            ProductService productService = new ProductService_impl();
+            model.addAttribute("message", "Thêm thành công!");
+            productService.save(product);
+            return "admin/addcuonsach";
+        } catch (Exception e) {
+            model.addAttribute("product", product);
+            model.addAttribute("message", "Thêm thất bại!");
+            return "admin/addcuonsach";
         }
     }
 }

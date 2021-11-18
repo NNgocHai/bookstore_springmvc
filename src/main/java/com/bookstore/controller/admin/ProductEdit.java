@@ -3,6 +3,13 @@ package com.bookstore.controller.admin;
 import com.bookstore.entity.CuonSachEntity;
 import com.bookstore.service.ProductService;
 import com.bookstore.service_impl.ProductService_impl;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,82 +19,63 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/admin/product/edit")
-public class ProductEdit extends HttpServlet {
+@Controller
+@RequestMapping("/admin/")
+public class ProductEdit {
+    public ProductEdit(){super();}
     ProductService productService=new ProductService_impl();
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int cuonsach_id= Integer.parseInt(request.getParameter("cuonsach_id"));
-        CuonSachEntity cuonSachEntity=productService.findById(cuonsach_id);
-        request.setAttribute("cuonsach",cuonSachEntity);
-        RequestDispatcher dispatcher=request.getRequestDispatcher("/views/admin/editcuonsach.jsp");
-        dispatcher.forward(request,response);
+    @RequestMapping(value = "product/edit", method = RequestMethod.GET)
+    public String doGet(ModelMap model, @RequestParam("cuonsach_id") String id) {
+
+        CuonSachEntity cuonSachEntity=productService.findById(Integer.parseInt(id));
+        model.addAttribute("product",cuonSachEntity);
+        return "admin/editcuonsach";
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
-        response.setContentType("text/html;charset=UTF-8");
+    @RequestMapping(value = "product/edit", method = RequestMethod.POST)
+    public String doPost(@ModelAttribute("product") CuonSachEntity product,
+                         ModelMap model, BindingResult errors, @RequestParam("cuonsach_id") String cuonsach_id) {
+        product.setMa_CuonSach(Integer.parseInt(cuonsach_id));
+        if (product.getMa_DauSach()== null) {
+            errors.rejectValue("ma_DauSach", "product", "Vui lòng nhập mã đầu sách!");
+        }
+        if (product.getTen_CuonSach().toString().trim().length() == 0) {
+            errors.rejectValue("ten_CuonSach", "product", "Vui lòng nhập tên sách!");
+        }
+        if (product.getGiabia() == null) {
+            errors.rejectValue("giabia", "product", "Vui lòng nhập giá!");
+        }
+        if (product.getSoluong()== null) {
+            errors.rejectValue("soluong", "product", "Vui lòng nhập số lượng!");
+        }
+        if (product.getTacgia().toString().trim().length() == 0) {
+            errors.rejectValue("tacgia", "product", "Vui lòng nhập tên tác giả!");
+        }
+        if (product.getAnh_CuonSach().toString().trim().length() == 0) {
+            errors.rejectValue("anh_CuonSach", "product", "Vui lòng nhập ảnh!");
+        }
+        if (product.getDiscount()== null) {
+            errors.rejectValue("discount", "product", "Vui lòng nhập discount!");
+        }
+        if (product.getMota().toString().trim().length() == 0) {
+            errors.rejectValue("mota", "product", "Vui lòng nhập mô tả!");
+        }
+        if (errors.hasErrors()) {
+            model.addAttribute("product", product);
+            model.addAttribute("message", "Vui lòng sửa các lỗi sau đây!");
+            return "admin/editcuonsach";
+        }
 
-        int cuonsach_id = Integer.parseInt(request.getParameter("cuonsach_id"));
-        String cuonsach_ten = request.getParameter("cuonsach_ten");
-        String cuonsach_maDS = request.getParameter("cuonsach_maDS");
-        String cuonsach_tacgia = request.getParameter("cuonsach_tacgia");
-        String cuonsach_soluong = request.getParameter("cuonsach_soluong");
-        String cuonsach_giaban = request.getParameter("cuonsach_giaban");
-        String cuonsach_anhCS = request.getParameter("cuonsach_anhCS");
-        String cuonsach_discount = request.getParameter("cuonsach_discount");
-        String cuonsach_mota=request.getParameter("cuonsach_mota");
-        if((!cuonsach_ten.equals("")) && (!cuonsach_maDS.equals("")) && (!cuonsach_tacgia.equals("")) && (!cuonsach_soluong.equals("")) &&(!cuonsach_giaban.equals(""))
-                && (!cuonsach_discount.equals(""))&&(!cuonsach_anhCS.equals("")))
-        {
-            CuonSachEntity cuonSachEntity = new CuonSachEntity();
-            cuonSachEntity.setMa_CuonSach(cuonsach_id);
-            cuonSachEntity.setTen_CuonSach(cuonsach_ten);
-            cuonSachEntity.setMa_DauSach(Integer.parseInt(cuonsach_maDS));
-            cuonSachEntity.setGiabia(Integer.parseInt(cuonsach_giaban));
-            cuonSachEntity.setSoluong(Integer.parseInt(cuonsach_soluong));
-            cuonSachEntity.setTacgia(cuonsach_tacgia);
-            cuonSachEntity.setAnh_CuonSach(cuonsach_anhCS);
-            cuonSachEntity.setDiscount(Integer.parseInt(cuonsach_discount));
-            cuonSachEntity.setMota(cuonsach_mota);
+        try {
             ProductService productService = new ProductService_impl();
-            productService.update(cuonSachEntity);
-            response.sendRedirect(request.getContextPath() + "/admin/product/list");
+            model.addAttribute("message", "Cập nhật thành công!");
+            productService.update(product);
+            return "admin/editcuonsach";
+        } catch (Exception e) {
+            model.addAttribute("product", product);
+            model.addAttribute("message", "Cập nhật thất bại!");
+            return "admin/editcuonsach";
         }
-        else{
-            request.setAttribute("errorMessage", "Vui lòng điền đầy đủ thông tin");
-            request.setAttribute("macuonsach",cuonsach_id);
-            request.setAttribute("madausach",cuonsach_maDS);
-            request.setAttribute("tencuonsach",cuonsach_ten);
-            request.setAttribute("tacgia",cuonsach_tacgia);
-            request.setAttribute("soluong",cuonsach_soluong);
-            request.setAttribute("anhcuonsach",cuonsach_anhCS);
-            request.setAttribute("discount",cuonsach_discount);
-            request.setAttribute("giaban",cuonsach_giaban);
-            RequestDispatcher rd = request.getRequestDispatcher("/views/admin/editcuonsach.jsp");
-            rd.forward(request, response);
-        }
-        /*try {
-
-        }
-        catch (Exception e)
-        {
-            PrintWriter out = response.getWriter();
-            out.print("<%@ page contentType=\"text/html;charset=UTF-8\" language=\"java\" %>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Loi</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<script>");
-            out.println("alert('Trung tai khoan hoac gmail')");
-            out.println("location.href = './edit?product-id="+cuonsach_id+"';");
-            out.println("</script>");
-            out.println("</body>");
-            out.println("</html>");
-            out.close();
-        }*/
     }
 }

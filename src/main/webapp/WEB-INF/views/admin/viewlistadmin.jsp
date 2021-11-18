@@ -49,7 +49,7 @@
                                         <td>${admin.gmail_Admin}</td>
                                         <td>
                                             <button type="reset" class="btn btn-danger"><a href="${pageContext.request.contextPath}/admin/admin/delete?admin-id=${admin.ma_Admin}">Xóa</a></button>
-                                            <button class="btn btn-success"><a href="${pageContext.request.contextPath}/admin/admin/edit?admin-id=${admin.ma_Admin}">Sửa</a></button>
+                                            <button class="btn btn-success"><a href="${pageContext.request.contextPath}/admin/admin/edit?admin-id=${admin.ma_Admin}">Sửaaa</a></button>
                                         </td>
                                     </tr>
                                 </c:forEach>

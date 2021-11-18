@@ -5,6 +5,7 @@
   Time: 12:44 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
@@ -56,8 +57,8 @@
                                         <td>${shipper.hoten_Shipper}</td>
                                         <td>${shipper.gmail_Shipper}</td>
                                         <td>
-                                            <button type="reset" class="btn btn-danger"><a href="${pageContext.request.contextPath}/admin/ship/delete?id=${shipper.ma_Shipper}">Xóa</a></button>
-                                            <button class="btn btn-success"><a href="${pageContext.request.contextPath}/admin/ship/edit?id=${shipper.ma_Shipper}">Sửa</a></button>
+                                            <button type="reset" class="btn btn-danger"><a href="${pageContext.request.contextPath}/admin/ship/delete?shipper_id=${shipper.ma_Shipper}">Xóa</a></button>
+                                            <button class="btn btn-success"><a href="${pageContext.request.contextPath}/admin/ship/edit?shipper_id=${shipper.ma_Shipper}">Sửa</a></button>
                                         </td>
                                     </tr>
                                 </c:forEach>

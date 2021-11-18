@@ -5,6 +5,8 @@
   Time: 5:36 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
@@ -57,8 +59,8 @@
                                         <td>${donhang.tongtien}</td>
                                         <td>${donhang.activeDH}</td>
                                         <td>
-                                            <button type="reset" class="btn btn-danger"><a href="${pageContext.request.contextPath}/admin/order/delete?id=${donhang.ma_DH}">Xóa</a></button>
-                                            <button class="btn btn-success"><a href="${pageContext.request.contextPath}/admin/order/edit?id=${donhang.ma_DH}">Sửa</a></button>
+                                            <button type="reset" class="btn btn-danger"><a href="${pageContext.request.contextPath}/admin/order/delete?order_id=${donhang.ma_DH}">Xóa</a></button>
+                                            <button class="btn btn-success"><a href="${pageContext.request.contextPath}/admin/order/edit?order_id=${donhang.ma_DH}">Sửa</a></button>
                                         </td>
                                     </tr>
                                 </c:forEach>

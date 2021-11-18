@@ -3,6 +3,10 @@ package com.bookstore.controller.admin;
 import com.bookstore.entity.DonHangEntity;
 import com.bookstore.service.DonHangService;
 import com.bookstore.service_impl.DonHangService_impl;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,14 +17,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/admin/order/list")
-public class OrderViewList extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+@Controller
+@RequestMapping("/admin/")
+public class OrderViewList{
+    public OrderViewList(){super();}
+
+    @RequestMapping("order/list")
+    public String doGet(ModelMap model) {
         DonHangService donhang = new DonHangService_impl();
         List<DonHangEntity> donhangList = donhang.findAll();
-        request.setAttribute("donhangList", donhangList);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/admin/viewlistdonhang.jsp");
-        dispatcher.forward(request, response);
+        model.addAttribute("donhangList", donhangList);
+        return "/admin/viewlistdonhang";
     }
 }

@@ -5,6 +5,9 @@
   Time: 5:58 PM
   To change this template use File | Settings | File Templates.
 --%>
+
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
@@ -33,41 +36,49 @@
                         <div class="card-title">Chuyên mục: Sửa</div>
                         <hr>
 
-                        <form action="${pageContext.request.contextPath}/admin/order/edit" method="post">
-                            <div><b> <span style="color:red"> ${errorMessage}</span></b></div>
+                        <form:form action="" method="post" modelAttribute="order">
+                            <div><b> <span style="color:red"> ${message}</span></b></div>
                             <div class="form-group">
-                                <label for="input-1">Mã đơn hàng</label>
-                                <input type="text" class="form-control" readonly id="input-1" placeholder="Mã đơn hàng" name="id" value="${donhang.ma_DH}">
+                                <label>Mã khách hàng</label>
+                                <form:input type="text" class="form-control"  path="ma_Customer" value = "${order.ma_Customer} "/>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="ma_Customer" /></span>
                             </div>
                             <div class="form-group">
-                                <label for="input-2">Mã khách hàng</label>
-                                <input type="text" class="form-control" readonly id="input-2" placeholder="Mã khách hàng" name="maKH" value="${donhang.ma_Customer}">
+                                <label>Mã đơn hàng</label>
+                                <form:input type="text" class="form-control" path="ma_DH" value = "${order.ma_DH}" readonly="true"/>
+
                             </div>
                             <div class="form-group">
-                                <label for="input-3">Địa chỉ</label>
-                                <input type="text" class="form-control" id="input-3" placeholder="Địa chỉ" name="diachi" value="${donhang.diachi}"required>
+                                <label>Địa chỉ</label>
+                                <form:input type="text" class="form-control" path="diachi" value = "${order.diachi}"/>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="diachi"/></span>
                             </div>
                             <div class="form-group">
-                                <label for="input-4">Số điện thoại</label>
-                                <input type="text" class="form-control" id="input-4" placeholder="Số điện thoại" name="sdt" value="${donhang.sdt}" required>
+                                <label>Số điện thoại</label>
+                                <form:input type="text" class="form-control" path="sdt" value = "${order.sdt}"/>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="sdt"/></span>
                             </div>
                             <div class="form-group">
-                                <label for="input-5">Ngày đặt</label>
-                                <input type="text" class="form-control" readonly id="input-5" placeholder="Ngày đặt" name="ngaydat" value="${donhang.ngaydat}">
+                                <label>Ngày đặt</label>
+                                <form:input type="text" class="form-control" path="ngaydat" value = "${order.ngaydat}"/>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="ngaydat"/></span>
                             </div>
                             <div class="form-group">
-                                <label for="input-6">Tổng tiền</label>
-                                <input type="text" class="form-control" readonly id="input-6" placeholder="Tổng tiền" name="tongtien" value="${donhang.tongtien}">
+                                <label>Tổng tiền</label>
+                                <form:input type="text" class="form-control" path="tongtien" value = "${order.tongtien}"/>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="tongtien"/></span>
                             </div>
+
                             <div class="form-group">
-                                <label for="input-7">Tình trạng</label>
-                                <input type="text" class="form-control" readonly id="input-7" placeholder="Tình trạng" name="tinhtrang" value="${donhang.activeDH}">
+                                <label>Tình trạng</label>
+                                <form:input type="text" class="form-control" path="activeDH" value = "${order.activeDH}"/>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="activeDH"/></span>
                             </div>
                             <div class="form-footer">
-                                <button type="reset" class="btn btn-danger"><i class="fa fa-times"></i> <a href="${pageContext.request.contextPath}/admin/order/list">Hủy</a> </button>
-                                <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> Sửa </button>
+                                <button type="reset" class="btn btn-danger"><i class="fa fa-times"></i><a href="${pageContext.request.contextPath}/admin/order/list">Hủy</a></button>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> Cập nhật</button>
                             </div>
-                        </form>
+                        </form:form>
 
                     </div>
                 </div>

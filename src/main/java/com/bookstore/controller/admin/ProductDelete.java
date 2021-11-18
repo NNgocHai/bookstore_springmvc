@@ -2,6 +2,11 @@ package com.bookstore.controller.admin;
 
 import com.bookstore.service.ProductService;
 import com.bookstore.service_impl.ProductService_impl;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,18 +18,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/admin/product/delete")
-public class ProductDelete extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int cuonsach_id= Integer.parseInt(request.getParameter("cuonsach_id"));
+@Controller
+@RequestMapping(value = "/admin/")
+public class ProductDelete{
+    public ProductDelete(){super();}
+    @RequestMapping(value = "product/delete", method = RequestMethod.GET)
+    public String doGet(ModelMap model, @RequestParam("cuonsach_id") String cuonsach_id) {
+
         ProductService productService = new ProductService_impl();
         List<Integer> listId = new ArrayList<Integer>();
-        HttpSession session = request.getSession();
-        //String cuonsach_ten = (String) session.getAttribute("cuonsach");
-        listId.add(cuonsach_id);
+        listId.add(Integer.parseInt(cuonsach_id));
         productService.deleteList(listId);
-        request.setAttribute("cuonsachList",productService.findAll());
-        response.sendRedirect(request.getContextPath()+"/admin/product/list");
+        model.addAttribute("cuonsachList",productService.findAll());
+        return "redirect:/admin/product/list";
     }
 }

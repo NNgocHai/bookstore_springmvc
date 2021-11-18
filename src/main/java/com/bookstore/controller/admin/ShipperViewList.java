@@ -3,6 +3,12 @@ package com.bookstore.controller.admin;
 import com.bookstore.entity.ShipperEntity;
 import com.bookstore.service.ShipperService;
 import com.bookstore.service_impl.ShipperService_impl;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,14 +19,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/admin/ship/list")
-public class ShipperViewList extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+@Controller
+@RequestMapping("/admin/")
+public class ShipperViewList{
+    public ShipperViewList() {
+        super();
+    }
+    @RequestMapping(value = "ship/list", method = RequestMethod.GET)
+    public String doGet(ModelMap model, @ModelAttribute("message") String message) {
         ShipperService shipperService=new ShipperService_impl();
         List<ShipperEntity> shipperList = shipperService.findAll();
-        request.setAttribute("shipperList", shipperList);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/views/admin/shipperviewlist.jsp");
-        dispatcher.forward(request, response);
+        model.addAttribute("shipperList", shipperList);
+        model.addAttribute("message",   message);
+        return "admin/shipperviewlist";
+
     }
 }
