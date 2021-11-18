@@ -5,6 +5,7 @@ import com.bookstore.service.DonHangService;
 import com.bookstore.service_impl.DonHangService_impl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,10 +24,11 @@ public class OrderViewList{
     public OrderViewList(){super();}
 
     @RequestMapping("order/list")
-    public String doGet(ModelMap model) {
+    public String doGet(ModelMap model, @ModelAttribute("message") String message) {
         DonHangService donhang = new DonHangService_impl();
         List<DonHangEntity> donhangList = donhang.findAll();
         model.addAttribute("donhangList", donhangList);
+        model.addAttribute("message",   message);
         return "/admin/viewlistdonhang";
     }
 }

@@ -26,7 +26,8 @@ public class ProductViewList2 {
 
     @RequestMapping(value = "product/list", method = RequestMethod.GET)
     public String doGet(ModelMap model,
-                        @RequestParam(value = "page", required = false ) String page) {
+                        @RequestParam(value = "page", required = false ) String page,
+                        @ModelAttribute(value = "message") String message) {
 
         if (page == null)
             page= "1";
@@ -38,6 +39,7 @@ public class ProductViewList2 {
 
         model.addAttribute("cuonsachList", navigationDaoImpl.getList());
         model.addAttribute("navigationDaoImpl", navigationDaoImpl);
+        model.addAttribute("message",   message);
 
         return "admin/viewlistcuonsach";
 

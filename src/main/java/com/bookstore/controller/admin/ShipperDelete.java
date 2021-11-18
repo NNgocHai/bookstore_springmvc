@@ -31,10 +31,18 @@ public class ShipperDelete{
         ShipperService shipper = new ShipperService_impl();
         List<Integer> listId = new ArrayList<Integer>();
 
-        listId.add(id);
-        shipper.deleteList(listId);
-        model.addAttribute("shipperList", shipper.findAll());
-        return "redirect:/admin/ship/list";
+        try {
+            listId.add(id);
+            shipper.deleteList(listId);
+//            model.addAttribute("shipperList", shipper.findAll());
+            model.addAttribute("message", "Xóa thành công");
+            return "redirect:/admin/ship/list";
+        }
+        catch (Exception e){
+            model.addAttribute("message", "Xóa thất bại");
+            return "redirect:/admin/ship/list";
+        }
+
 
     }
 }

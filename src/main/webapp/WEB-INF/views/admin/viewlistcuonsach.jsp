@@ -39,6 +39,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Danh sách Cuốn sách</h5>
                         <div class="table-responsive">
+                            <div><b> <span style="color:red"> ${message}</span></b></div>
                             <table class="table tablee table-striped">
                                 <thead>
                                 <tr>

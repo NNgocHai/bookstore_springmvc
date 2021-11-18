@@ -22,7 +22,6 @@ public class AdminDeleteID {
     @RequestMapping("admin/delete")
     public String doGet(@RequestParam("admin-id") int admin_idd,
                         HttpSession session,
-                        final RedirectAttributes redirectAttributes,
                         ModelMap model) {
 
         AdminService admin = new AdminService_impl();
@@ -32,19 +31,21 @@ public class AdminDeleteID {
             if(!(admin.checkDelete(admin_tk, admin_idd))) {
                 listId.add(admin_idd);
                 admin.deleteList(listId);
-                model.addAttribute("adminList", admin.findAll());
+//                model.addAttribute("adminList", admin.findAll());
                 String message= "Xóa thành công";
-                redirectAttributes.addFlashAttribute("message", message);
+                model.addAttribute("message", message);
                 return "redirect:/admin/admin/list";
             }
             else
             {
-                return "admin/error";
+                model.addAttribute("message", "Xóa thất bại");
+                return "redirect:/admin/admin/list";
             }
         }
         catch (Exception e)
         {
-            return "admin/error";
+            model.addAttribute("message", "Xóa thất bại");
+            return "redirect:/admin/admin/list";
         }
     }
 }

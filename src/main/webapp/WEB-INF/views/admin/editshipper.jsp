@@ -34,43 +34,48 @@
                         <div class="card-title">Chuyên mục: Sửa</div>
                         <hr>
 
-                        <form action="${pageContext.request.contextPath}/admin/ship/edit" method="post">
-                            <div><b> <span style="color:red"> ${errorMessage}</span></b></div>
+                        <form:form action="" method="post" modelAttribute="shipper">
+                            <div><b> <span style="color:red"> ${message}</span></b></div>
                             <div class="form-group">
-                                <label for="input-1">ID</label>
-                                <input type="text" class="form-control" readonly id="input-1" placeholder="Shipper ID" name="id" value="${shipper.ma_Shipper}" required>
+                                <label >ID</label>
+                                <form:input type="text" class="form-control" path="ma_Shipper" readonly="true"/>
+
                             </div>
                             <div class="form-group">
-                                <label for="input-2">Username</label>
-                                <input type="text" class="form-control" id="input-2" placeholder="Username" name="shipper_username" value="${shipper.taikhoan_Shipper}" required>
+                                <label >Username</label>
+                                <form:input type="text" class="form-control" path="taikhoan_Shipper"/>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="taikhoan_Shipper"/></span>
                             </div>
                             <div class="form-group">
-                                <label for="input-3">Password</label>
-                                <input type="password" class="form-control" id="input-3" placeholder="Mật khẩu" name="shipper_password" value="${shipper.matkhau_Shipper}" required>
+                                <label >Password</label>
+                                <form:input type="password"  id="input-2" class="form-control" path="matkhau_Shipper"/>
+
                                 <input type="checkbox" onclick="myFunction1()">Hiển thị mật khẩu
                                 <script>function myFunction1() {
-                                    var x = document.getElementById("input-3");
+                                    var x = document.getElementById("input-2");
                                     if (x.type === "password") {
                                         x.type = "text";
                                     } else {
                                         x.type = "password";
                                     }
                                 }</script>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="matkhau_Shipper"/></span>
                             </div>
                             <div class="form-group">
-                                <label for="input-4">Tên Customer</label>
-                                <input type="text" class="form-control" id="input-4" placeholder="Tên Admin" name="shipper_name" value="${shipper.hoten_Shipper}" required>
+                                <label >Họ và tên</label>
+                                <form:input type="text" class="form-control" path="hoten_Shipper"/>
+                                <form:errors path="hoten_Shipper"/>
                             </div>
                             <div class="form-group">
-                                <label for="input-5">Email</label>
-                                <input type="email" class="form-control" id="input-5" placeholder="Email" name="shipper_gmail" value="${shipper.gmail_Shipper}" required>
+                                <label>Email</label>
+                                <form:input type="email" class="form-control" path="gmail_Shipper"/>
+                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="gmail_Shipper"/></span>
                             </div>
-
                             <div class="form-footer">
-                                <button type="reset" class="btn btn-danger"><i class="fa fa-times"></i> <a href="${pageContext.request.contextPath}/admin/ship/list">Hủy</a> </button>
-                                <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> Sửa </button>
+                                <button type="reset" class="btn btn-danger"><i class="fa fa-times"></i><a href="${pageContext.request.contextPath}/admin/ship/list">Hủy</a></button>
+                                <input type="submit"  value="Lưu" name="add" class="btn btn-success"/>
                             </div>
-                        </form>
+                        </form:form>
 
                     </div>
                 </div>

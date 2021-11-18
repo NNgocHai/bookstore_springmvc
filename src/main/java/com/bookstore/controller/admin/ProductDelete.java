@@ -27,9 +27,17 @@ public class ProductDelete{
 
         ProductService productService = new ProductService_impl();
         List<Integer> listId = new ArrayList<Integer>();
-        listId.add(Integer.parseInt(cuonsach_id));
-        productService.deleteList(listId);
-        model.addAttribute("cuonsachList",productService.findAll());
-        return "redirect:/admin/product/list";
+        try{
+            listId.add(Integer.parseInt(cuonsach_id));
+            productService.deleteList(listId);
+//            model.addAttribute("cuonsachList",productService.findAll());
+            model.addAttribute("message", "Xóa thành công");
+            return "redirect:/admin/product/list";
+        }
+        catch (Exception e){
+            model.addAttribute("message", "Xóa thất bại");
+            return "redirect:/admin/product/list";
+        }
+
     }
 }

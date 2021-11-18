@@ -29,12 +29,14 @@ public class OrderDelete {
         try{
             listId.add(Integer.parseInt(order_id));
             donhang.deleteList(listId);
-            model.addAttribute("donhangList", donhang.findAll());
+//            model.addAttribute("donhangList", donhang.findAll());
+            model.addAttribute("message", "Xóa thành công");
             return "redirect:/admin/order/list";
 
         }
         catch (Exception e)
         {
+            model.addAttribute("message", "Xóa thất bại");
             return "redirect:/admin/order/list";
         }
     }

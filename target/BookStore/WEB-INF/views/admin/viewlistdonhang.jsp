@@ -35,6 +35,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Danh sách Đơn hàng</h5>
                         <div class="table-responsive">
+                            <div><b> <span style="color:red"> ${message}</span></b></div>
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
