@@ -99,7 +99,8 @@ public class AdminController {
         try {
             model.addAttribute("message", "Thêm thành công!");
             adminService.save(admin);
-            return "admin/addadmin";
+            return "redirect:/admin/admin/add";
+
         } catch (Exception e) {
             model.addAttribute("admin", admin);
             model.addAttribute("message", "Thêm thất bại!");
@@ -298,6 +299,7 @@ public class AdminController {
             else{
                 categoryService.save(cate);
                 model.addAttribute("message", "Thêm đầu sách thành công!");
+                return "redirect:/admin/cate/add";
             }
         }
         catch (Exception e)
@@ -352,12 +354,12 @@ public class AdminController {
                              ModelMap model
                              ) {
         int category_id= Integer.parseInt(cate_id);
-        CategoryService category = new CategoryService_impl();
+
         List<Integer> listId = new ArrayList<Integer>();
         try {
             listId.add(category_id);
-            category.deleteList(listId);
-            model.addAttribute("message", "Id: " + cate_id + " Xoá thành công");
+            categoryService.deleteList(listId);
+            model.addAttribute("message",  "Xoá thành công");
             return "redirect:/admin/cate/list";
         }
             catch(Exception e){
@@ -445,13 +447,15 @@ public class AdminController {
 
         try{
             customerService.save(customerEntity);
-
-            return "admin/adduser";
+            model.addAttribute("message", "Thêm  thành công!");
+            return "redirect:/admin/user/add";
         }
         catch (Exception e)
         {
+            model.addAttribute("message", "Thêm  thất bại!");
             return "admin/adduser";
         }
+
 
     }
 
@@ -519,13 +523,13 @@ public class AdminController {
         try{
             listId.add(id);
             customerService.deleteList(listId);
-            model.addAttribute("message", "Id: " + userid + " được xoá thành công");
+            model.addAttribute("message", "Xoá thành công");
             return "redirect:/admin/user/list";
 
         }
         catch (Exception e)
         {
-            model.addAttribute("message", "Id: " + userid + " xoá thất bại");
+            model.addAttribute("message", "Xoá thất bại");
             return "redirect:/admin/user/list";
         }
     }
@@ -545,7 +549,6 @@ public class AdminController {
     public String PhanCong(ModelMap model) {
         List<ShipperEntity> listSP = shipperDao.findAll();
         model.addAttribute("listSP", listSP);
-        DonHangDao donHangDao = new DonHangDao_impl();
         List<DonHangEntity> listDHCG = donHangDao.Find_DHCG();
         model.addAttribute("listDHCG", listDHCG);
         if (listDHCG.size() != 0) {
@@ -572,7 +575,6 @@ public class AdminController {
                 }
             }
             List<ShipperEntity> shipperEntities = new ArrayList<ShipperEntity>();
-            ShipperService shipperService = new ShipperService_impl();
             shipperEntities = shipperService.findAll();
             HttpSession session = request.getSession();
             session.setAttribute("listDH_DaChon", listDH_DaChon);
@@ -583,7 +585,6 @@ public class AdminController {
         } else {
 
             HttpSession session = request.getSession();
-            GiaoHangService giaoHangService = new GiaoHangService_impl();
             List<DonHangEntity> listDH_DaChon = (List<DonHangEntity>) session.getAttribute("listDH_DaChon");
             for (DonHangEntity donHangEntity : listDH_DaChon) {
                 GiaoHangIDKey giaoHangIDKey = new GiaoHangIDKey();
@@ -673,9 +674,9 @@ public class AdminController {
         return "/admin/viewlistdonhang";
     }
     @RequestMapping(value = "product/add", method = RequestMethod.GET)
-    public String ProductAdd(ModelMap model, @RequestParam(value = "errorMessage", required = false) String message) {
+    public String ProductAdd(ModelMap model, @ModelAttribute(value = "message") String message) {
         model.addAttribute("product", new CuonSachEntity());
-        model.addAttribute("errorMessage", message);
+        model.addAttribute("message", message);
         return "admin/addcuonsach";
 
     }
@@ -714,9 +715,9 @@ public class AdminController {
         }
 
         try {
-            model.addAttribute("message", "Thêm thành công!");
             productService.save(product);
-            return "admin/addcuonsach";
+            model.addAttribute("message", "Thêm thành công!");
+            return "redirect:/admin/product/add";
         } catch (Exception e) {
             model.addAttribute("product", product);
             model.addAttribute("message", "Thêm thất bại!");
@@ -850,7 +851,7 @@ public class AdminController {
         try {
             model.addAttribute("message", "Thêm thành công!");
             shipperService.save(shipper);
-            return "admin/addshipper";
+            return "redirect:/admin/ship/add";
         } catch (Exception e) {
             model.addAttribute("shipper", shipper);
             model.addAttribute("message", "Thêm thất bại!");
@@ -863,12 +864,11 @@ public class AdminController {
     @RequestMapping(value = "ship/delete", method = RequestMethod.GET)
     public String ShipperDelete(ModelMap model, @RequestParam("shipper_id") String shipper_id) {
         int id= Integer.parseInt(shipper_id);
-        ShipperService shipper = new ShipperService_impl();
         List<Integer> listId = new ArrayList<Integer>();
 
         try {
             listId.add(id);
-            shipper.deleteList(listId);
+            shipperService.deleteList(listId);
 //            model.addAttribute("shipperList", shipper.findAll());
             model.addAttribute("message", "Xóa thành công");
             return "redirect:/admin/ship/list";

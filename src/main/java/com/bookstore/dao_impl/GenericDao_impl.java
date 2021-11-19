@@ -164,8 +164,8 @@ public class GenericDao_impl<ID extends Integer,T> implements GenericDao<ID,T> {
     public Integer deleteList(List<ID> ids) {
         this.persistenceClass = (Class<T>) ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         Integer count = 0;
-        Session session = sessionFactory.openSession();
         Transaction transaction = null;
+        Session session = sessionFactory.openSession();
         transaction = session.beginTransaction();
         try{
             for(ID item: ids){
