@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class ShipperEditDH{
-    @RequestMapping(value = "/shipper/editDH",method = RequestMethod.GET)
+    @RequestMapping(value = "/shipper1/editDH",method = RequestMethod.GET)
     public String ShipperEdit(HttpSession session,@RequestParam(value = "DH-id",required = false) String id)
     {
         try{

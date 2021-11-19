@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 @Controller
 public class ShipperHistoryEmpty {
-    @RequestMapping("/shipper/emptyhistory")
+    @RequestMapping("/shipper1/emptyhistory")
     public String ShipperHistoryEmpty(HttpSession session){
         try{
             String user = (String) session.getAttribute("user_shipper");

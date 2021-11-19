@@ -18,12 +18,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 @Controller
 public class ShipperLogin{
-    @RequestMapping(value = "/shipper/login",method=RequestMethod.GET)
+    @RequestMapping(value = "/shipper1/login",method=RequestMethod.GET)
     public String ShipperLogin()
     {
         return "/shipper/login";
     }
-    @RequestMapping(value = "/shipper/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/shipper1/login",method = RequestMethod.POST)
     public String ShipperLoginPost(ModelMap model,HttpSession session,@RequestParam("user") String user,@RequestParam("password") String password)
     {
         ShipperService shipper = new ShipperService_impl();

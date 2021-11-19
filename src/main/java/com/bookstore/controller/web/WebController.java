@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Random;
 
 @Controller
-public class test {
+public class WebController {
     @RequestMapping("/")
     public String index() {
         return "redirect:web/home";
@@ -822,6 +822,5 @@ public class test {
                 return "redirect:/web/product/CartDetail";
             }
         }
-
 
 }

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 @Controller
 public class ShipperHistoryGH {
-    @RequestMapping("/shipper/history")
+    @RequestMapping("/shipper1/history")
     public String ShipperHistoryGH(HttpSession session, ModelMap model){
         try {
             String user = (String)session.getAttribute("user_shipper");

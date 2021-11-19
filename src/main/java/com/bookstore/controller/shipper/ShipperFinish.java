@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 @Controller
 public class ShipperFinish{
-    @RequestMapping("/shipper/finish")
+    @RequestMapping("/shipper1/finish")
     public String ShipperFinish1(HttpSession session){
         try{
             String user = (String) session.getAttribute("user_shipper");

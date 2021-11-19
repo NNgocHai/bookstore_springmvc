@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 @Controller
 public class ShipperViewListDH{
-    @RequestMapping(value="/shipper/home",method = RequestMethod.GET)
+    @RequestMapping(value="/shipper1/home",method = RequestMethod.GET)
     public String ShipperViewListDH(ModelMap model, HttpSession session){
         try {
             String user=(String)session.getAttribute("user_shipper");
