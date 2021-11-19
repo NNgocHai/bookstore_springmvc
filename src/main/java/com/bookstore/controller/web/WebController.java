@@ -33,7 +33,8 @@ public class WebController {
         return "redirect:web/home";
     }
 
-
+    @Autowired
+    SendingEmail sendingEmail=new SendingEmail();
     @Autowired
     ChiTietDonHangService chiTietDonHangService = new ChiTietDonHangService_impl();
     @Autowired
@@ -694,7 +695,7 @@ public class WebController {
                 String code_string=String.valueOf(code);
 
                 session.setAttribute("code_dk",code_string);
-                SendingEmail se=new SendingEmail(customer_gmail,customer_name,code_string);
+                sendingEmail.SendingEmail1(customer_gmail,customer_name,code_string);
 
                 return "web/verification";
             } else {
