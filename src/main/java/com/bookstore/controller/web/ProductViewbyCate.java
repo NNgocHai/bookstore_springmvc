@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/web/")
+@RequestMapping("/web1/")
 public class ProductViewbyCate{
     public ProductViewbyCate(){
         super();

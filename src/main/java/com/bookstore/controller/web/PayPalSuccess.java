@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-@RequestMapping("/web/")
+@RequestMapping("/web1/")
 public class PayPalSuccess {
     @RequestMapping("paysuccess")
     public String success(HttpSession session,

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Random;
 
 @Controller
-@RequestMapping("/web/")
+@RequestMapping("/web1/")
 public class Register {
     @RequestMapping(value = "register", method = RequestMethod.GET)
     public String doGet() {

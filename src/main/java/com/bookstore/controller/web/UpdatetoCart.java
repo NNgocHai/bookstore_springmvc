@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/web/")
+@RequestMapping("/web1/")
 public class UpdatetoCart {
     public UpdatetoCart() {
         super();

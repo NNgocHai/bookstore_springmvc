@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping("/web/")
+@RequestMapping("/web1/")
 public class Payment {
     @RequestMapping(value = "payment", method = RequestMethod.POST)
     public String doPost(@RequestParam("address") String address,

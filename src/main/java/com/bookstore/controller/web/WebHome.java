@@ -23,7 +23,7 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/web/")
+@RequestMapping("/web1/")
 public class WebHome {
     public WebHome(){
         super();

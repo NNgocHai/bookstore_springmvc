@@ -35,8 +35,8 @@ public class ProductViewList2 {
         int maxNavigationPage = 6;// max so trang hien ra
 
         CategoryService_impl categoryService =new CategoryService_impl();
-        NavigationDao_impl<CuonSachEntity> navigationDaoImpl = new NavigationDao_impl<CuonSachEntity>(Integer.valueOf(page),maxResult,maxNavigationPage );
-
+        NavigationDao_impl<CuonSachEntity> navigationDaoImpl = new NavigationDao_impl<CuonSachEntity>();
+        navigationDaoImpl.Navigation(Integer.valueOf(page),maxResult,maxNavigationPage );
         model.addAttribute("cuonsachList", navigationDaoImpl.getList());
         model.addAttribute("navigationDaoImpl", navigationDaoImpl);
         model.addAttribute("message",   message);
