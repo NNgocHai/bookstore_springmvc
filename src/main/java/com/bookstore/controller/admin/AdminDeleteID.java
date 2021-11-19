@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin2/")
 public class AdminDeleteID {
     public AdminDeleteID() {
         super();

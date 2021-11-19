@@ -21,8 +21,9 @@ import java.io.PrintWriter;
 
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin2/")
 public class AdminAdd {
+
     public AdminAdd() {
         super();
     }

@@ -18,7 +18,7 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin2/")
 public class CustomerViewList {
     public CustomerViewList() {
         super();

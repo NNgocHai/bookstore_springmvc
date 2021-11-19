@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin2/")
 public class CustomerAdd  {
     public CustomerAdd() {
         super();
