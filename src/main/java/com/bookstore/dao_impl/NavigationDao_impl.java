@@ -14,7 +14,6 @@ public class NavigationDao_impl<E> implements com.bookstore.dao.NavigationDao {
     @Autowired
     SessionFactory factory;
 
-
     private int totalRecords;
     private int currentPage;
     private List<E> list;

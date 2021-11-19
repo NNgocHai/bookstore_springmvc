@@ -624,13 +624,12 @@ public class test {
         List<CuonSachEntity> productListCurrent = new ArrayList<CuonSachEntity>();
         List<CuonSachEntity> productListCurrent_km = new ArrayList<CuonSachEntity>();
 
-        ProductService_impl productService_impl = new ProductService_impl();
-        productListCurrent = productService_impl.findAll();
+        productListCurrent = productService.findAll();
         productListCurrent.get(productListCurrent.size() - 1);
 
         for (CuonSachEntity product : productListCurrent) {
             CuonSachEntity product_km = new CuonSachEntity();
-            product_km = productService_impl.findById(product.getMa_CuonSach());
+            product_km = productService.findById(product.getMa_CuonSach());
             double db = (Double.parseDouble(String.valueOf(product.getGiabia())) * (1 - (Double.parseDouble(String.valueOf(product.getDiscount())) / 100)));
             product_km.setGiabia((int) db);
             productListCurrent_km.add(product_km);
@@ -638,7 +637,7 @@ public class test {
         }
         for (CuonSachEntity product : navigationDaoImpl.getList()) {
             CuonSachEntity product_km = new CuonSachEntity();
-            product_km = productService_impl.findById(product.getMa_CuonSach());
+            product_km = productService.findById(product.getMa_CuonSach());
             double db = (Double.parseDouble(String.valueOf(product.getGiabia())) * (1 - (Double.parseDouble(String.valueOf(product.getDiscount())) / 100)));
             product_km.setGiabia((int) db);
             productList_km.add(product_km);
