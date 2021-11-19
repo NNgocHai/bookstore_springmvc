@@ -3,6 +3,12 @@ package com.bookstore.email;
 import com.bookstore.entity.CustomerEntity;
 import com.bookstore.service.CustomerService;
 import com.bookstore.service_impl.CustomerService_impl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,18 +19,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
-@WebServlet("/web/verify")
-public class VerifyCode extends HttpServlet {
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+@Controller
+public class VerifyCode {
+    @Autowired
+    CustomerService customerService = new CustomerService_impl();
+
+    @RequestMapping(value="/web/verify", method = RequestMethod.POST)
+    public String Verify(HttpServletRequest request, HttpServletResponse response,
+                            @RequestParam(value = "ma_code", required = false) String code_nhap,
+                            ModelMap model) throws IOException {
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=UTF-8");
-        String code_nhap=request.getParameter("ma_code").trim();
-        HttpSession session=request.getSession();
-        if(session.getAttribute("code_dk").equals(code_nhap))
-        {
-            //save user
+        HttpSession session = request.getSession();
+        if (session.getAttribute("code_dk").equals(code_nhap)) {
             CustomerEntity customerEntity = new CustomerEntity();
             customerEntity.setTaikhoan_Customer(session.getAttribute("taikhoan_dk").toString());
             customerEntity.setGmail_Customer(session.getAttribute("gmail_dk").toString());
@@ -32,8 +41,8 @@ public class VerifyCode extends HttpServlet {
             customerEntity.setMatkhau_Customer(session.getAttribute("matkhau_dk").toString());
             customerEntity.setSdt_Customer(session.getAttribute("sdt_dk").toString());
             customerEntity.setVitien(Integer.parseInt(session.getAttribute("vitien_dk").toString()));
-            CustomerService customer = new CustomerService_impl();
-            customer.save(customerEntity);
+
+            customerService.save(customerEntity);
 
             //remove session regist
             //session.removeAttribute("taikhoan_dk");
@@ -59,11 +68,10 @@ public class VerifyCode extends HttpServlet {
             out.println("</body>");
             out.println("</html>");
             out.close();
+        } else {
+            model.addAttribute("errMessage", "Vui lòng kiểm tra lại mã xác nhận.");
+            return "web/verification";
         }
-        else{
-            request.setAttribute("errMessage","Vui lòng kiểm tra lại mã xác nhận.");
-            RequestDispatcher rd = request.getRequestDispatcher("/views/web/verification.jsp");
-            rd.forward(request, response);
-        }
+        return "web/verification";
     }
 }

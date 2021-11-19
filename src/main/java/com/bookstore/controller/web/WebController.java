@@ -50,6 +50,9 @@ public class WebController {
     CategoryService categoryService = new CategoryService_impl();
     @Autowired
     NavigationDao_impl<CuonSachEntity> navigationDaoImpl = new NavigationDao_impl<CuonSachEntity>();
+    @Autowired
+    CustomerDao customerDao=new CustomerDao_impl();
+
 
 
     @RequestMapping("/web/home")
@@ -671,7 +674,6 @@ public class WebController {
             int customer_vitien = 1000000;
 
 
-            CustomerDao customerDao=new CustomerDao_impl();
             boolean a= customerDao.checkAddCustomer(customer_tk,customer_gmail,customer_sdt);
             boolean gmail_check=customerDao.checkGmail(customer_gmail);
             boolean sdt_check=customerDao.checkSdt(customer_sdt);
