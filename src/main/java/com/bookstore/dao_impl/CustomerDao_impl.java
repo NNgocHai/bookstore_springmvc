@@ -2,20 +2,26 @@ package com.bookstore.dao_impl;
 
 import com.bookstore.dao.CustomerDao;
 import com.bookstore.entity.CustomerEntity;
-import com.bookstore.utils.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class CustomerDao_impl extends GenericDao_impl<Integer, CustomerEntity> implements CustomerDao {
+    @Autowired
+    SessionFactory factory;
+
     public boolean checkCustomerLogin(String username, String password) {
         boolean exist = false;
         Object a = new Object();
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         Transaction transaction = null;
         transaction = session.beginTransaction();
         try {
@@ -45,7 +51,7 @@ public class CustomerDao_impl extends GenericDao_impl<Integer, CustomerEntity> i
     public List<CustomerEntity> findByUser(String user) {
         List<CustomerEntity> results = new ArrayList<CustomerEntity>();
         Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         try {
             // start a transaction
             transaction = session.beginTransaction();
@@ -71,7 +77,7 @@ public class CustomerDao_impl extends GenericDao_impl<Integer, CustomerEntity> i
     public boolean checkAddCustomer(String username, String gmail, String sdt) {
         boolean exist = true;
         Object a = new Object();
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         Transaction transaction = null;
         transaction = session.beginTransaction();
         try {
@@ -102,7 +108,7 @@ public class CustomerDao_impl extends GenericDao_impl<Integer, CustomerEntity> i
     public boolean checkUserName(String username) {
         boolean exist = true;
         Object a = new Object();
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         Transaction transaction = null;
         transaction = session.beginTransaction();
         try {
@@ -130,7 +136,7 @@ public class CustomerDao_impl extends GenericDao_impl<Integer, CustomerEntity> i
     public boolean checkGmail(String gmail) {
         boolean exist = true;
         Object a = new Object();
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         Transaction transaction = null;
         transaction = session.beginTransaction();
         try {
@@ -157,7 +163,7 @@ public class CustomerDao_impl extends GenericDao_impl<Integer, CustomerEntity> i
     public boolean checkSdt(String sdt) {
         boolean exist = true;
         Object a = new Object();
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         Transaction transaction = null;
         transaction = session.beginTransaction();
         try {
@@ -184,7 +190,7 @@ public class CustomerDao_impl extends GenericDao_impl<Integer, CustomerEntity> i
     public boolean checkActiveAccount(String key1, String key2) {
         boolean exist = false;
         Object a = new Object();
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         Transaction transaction = null;
         transaction = session.beginTransaction();
         try {

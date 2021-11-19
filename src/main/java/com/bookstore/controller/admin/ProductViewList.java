@@ -24,8 +24,8 @@ public class ProductViewList extends HttpServlet {
         int maxNavigationPage = 6;// max so trang hien ra
 
         CategoryService_impl categoryService =new CategoryService_impl();
-        NavigationDao_impl<CuonSachEntity> navigationDaoImpl = new NavigationDao_impl<CuonSachEntity>(Integer.valueOf(page),maxResult,maxNavigationPage );
-
+        NavigationDao_impl<CuonSachEntity> navigationDaoImpl = new NavigationDao_impl<CuonSachEntity>();
+        navigationDaoImpl.Navigation(Integer.valueOf(page),maxResult,maxNavigationPage );
         request.setAttribute("cuonsachList", navigationDaoImpl.getList());
         request.setAttribute("navigationDaoImpl", navigationDaoImpl);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/views/admin/viewlistcuonsach.jsp");

@@ -4,10 +4,16 @@ import com.bookstore.dao.ChiTietDonHangDao;
 import com.bookstore.dao_impl.ChiTietDonHangDao_impl;
 import com.bookstore.entity.ChiTietDonHangEntity;
 import com.bookstore.service.ChiTietDonHangService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
+@Service
 public class ChiTietDonHangService_impl implements ChiTietDonHangService {
+    @Autowired
     public ChiTietDonHangDao chiTietDonHangDao_impl = new ChiTietDonHangDao_impl();
 
     @Override

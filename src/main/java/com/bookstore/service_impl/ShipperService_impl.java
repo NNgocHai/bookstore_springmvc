@@ -4,10 +4,15 @@ import com.bookstore.dao.ShipperDao;
 import com.bookstore.dao_impl.ShipperDao_impl;
 import com.bookstore.entity.ShipperEntity;
 import com.bookstore.service.ShipperService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
-
+@Service
+@Transactional
 public class ShipperService_impl implements ShipperService {
+    @Autowired
     public ShipperDao shipperDao=new ShipperDao_impl();
     public List<ShipperEntity> findAll(){
         return shipperDao.findAll();

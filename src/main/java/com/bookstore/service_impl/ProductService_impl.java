@@ -1,15 +1,21 @@
 package com.bookstore.service_impl;
 
 
+import com.bookstore.dao.ProductDao;
 import com.bookstore.dao_impl.ProductDao_impl;
 import com.bookstore.entity.ChiTietDonHangEntity;
 import com.bookstore.entity.CuonSachEntity;
 import com.bookstore.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
-
+@Service
+@Transactional
 public class ProductService_impl implements ProductService {
-    public ProductDao_impl productDao = new ProductDao_impl();
+    @Autowired
+    public ProductDao productDao = new ProductDao_impl();
     public List<CuonSachEntity> findAll() {
         return productDao.findAll();
     }

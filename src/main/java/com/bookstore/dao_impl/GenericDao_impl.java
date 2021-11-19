@@ -1,34 +1,31 @@
 package com.bookstore.dao_impl;
 
 import com.bookstore.dao.GenericDao;
-import com.bookstore.utils.HibernateUtil;
-import org.hibernate.HibernateException;
-import org.hibernate.ObjectNotFoundException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.*;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resource;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class GenericDao_impl<ID extends Integer,T> implements GenericDao<ID,T> {
-    protected final Class<T> persistenceClass;
-//    public Session session = HibernateUtil.getSessionFactory().openSession();
-    public GenericDao_impl(){
-        this.persistenceClass = (Class<T>) ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
-    }
+    @Autowired
+    private SessionFactory sessionFactory;
+    protected  Class<T> persistenceClass;
     public String getPersistenceClassName(){
         return persistenceClass.getSimpleName();
     }
 
-//    public Session getSession(){
-//        return HibernateUtil.getSessionFactory().openSession();
-//    }
 
     public List<T> findAll() {
+        this.persistenceClass = (Class<T>) ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         List<T> list = new ArrayList<T>();
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         Transaction transaction = null;
         transaction = session.beginTransaction();
         try{
@@ -52,9 +49,11 @@ public class GenericDao_impl<ID extends Integer,T> implements GenericDao<ID,T> {
     }
 
     public T update(T entity) {
+        this.persistenceClass = (Class<T>) ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+
         T result  = null;
         Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         transaction = session.beginTransaction();
         try{
             Object object = session.merge(entity);
@@ -73,8 +72,9 @@ public class GenericDao_impl<ID extends Integer,T> implements GenericDao<ID,T> {
     }
 
     public T save(T entity) {
+        this.persistenceClass = (Class<T>) ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         transaction = session.beginTransaction();
         try{
             session. persist(entity);
@@ -93,9 +93,10 @@ public class GenericDao_impl<ID extends Integer,T> implements GenericDao<ID,T> {
 
 
     public T findById(int var1) {
+        this.persistenceClass = (Class<T>) ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         T result = null;
         Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         transaction = session.beginTransaction();
         try{
             result = (T) session.get(persistenceClass, var1);
@@ -116,9 +117,10 @@ public class GenericDao_impl<ID extends Integer,T> implements GenericDao<ID,T> {
     }
 
     public Object[] findByProperty(String property, Object value, String sortExpression, String sortDirection) {
+        this.persistenceClass = (Class<T>) ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         List<T> list = new ArrayList<T>();
         Object totalItem = 0;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         Transaction transaction = null;
         transaction = session.beginTransaction();
         try
@@ -160,8 +162,9 @@ public class GenericDao_impl<ID extends Integer,T> implements GenericDao<ID,T> {
     }
 
     public Integer deleteList(List<ID> ids) {
+        this.persistenceClass = (Class<T>) ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[1];
         Integer count = 0;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = sessionFactory.openSession();
         Transaction transaction = null;
         transaction = session.beginTransaction();
         try{

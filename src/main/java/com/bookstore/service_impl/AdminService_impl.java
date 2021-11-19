@@ -4,10 +4,15 @@ import com.bookstore.dao.AdminDao;
 import com.bookstore.dao_impl.AdminDao_impl;
 import com.bookstore.entity.AdminsEntity;
 import com.bookstore.service.AdminService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
-
+@Service
+@Transactional
 public class AdminService_impl implements AdminService {
+    @Autowired
     public AdminDao adminDao = new AdminDao_impl();
     public List<AdminsEntity> findAll() {
         //AdminDao adminDao = new AdminDao_impl();

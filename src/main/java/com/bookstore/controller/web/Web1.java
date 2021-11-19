@@ -247,12 +247,12 @@ public class Web1 {
     }
 
     @RequestMapping(value = "/web/login", method = RequestMethod.GET)
-    public String WebLogin() {
+    public String WebLoginGet() {
         return "web/login";
     }
 
     @RequestMapping(value = "/web/login", method = RequestMethod.POST)
-    public String WebLogin1(HttpSession session, ModelMap model, @RequestParam("user") String user, @RequestParam("password") String password) {
+    public String WebLoginPost(HttpSession session, ModelMap model, @RequestParam("user") String user, @RequestParam("password") String password) {
         CustomerService customerService = new CustomerService_impl();
         GioHangService gioHangService = new GioHangService_impl();
         List<CustomerEntity> customerServices = new ArrayList<CustomerEntity>();

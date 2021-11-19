@@ -4,10 +4,15 @@ import com.bookstore.dao.DonHangDao;
 import com.bookstore.dao_impl.DonHangDao_impl;
 import com.bookstore.entity.DonHangEntity;
 import com.bookstore.service.DonHangService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
-
+@Service
+@Transactional
 public class DonHangService_impl implements DonHangService {
+    @Autowired
     DonHangDao donHangDao = new DonHangDao_impl();
     @Override
     public DonHangEntity findById(int var1) {

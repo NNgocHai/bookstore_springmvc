@@ -3,22 +3,26 @@ package com.bookstore.dao_impl;
 import com.bookstore.dao.ProductDao;
 import com.bookstore.entity.ChiTietDonHangEntity;
 import com.bookstore.entity.CuonSachEntity;
-import com.bookstore.utils.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Repository
 public class ProductDao_impl extends GenericDao_impl<Integer, CuonSachEntity> implements ProductDao {
+    @Autowired
+    SessionFactory factory;
 
     @Override
     public List<CuonSachEntity> FindHotDiscount() {
         List<CuonSachEntity> results =new ArrayList<CuonSachEntity>();
         Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         try  {
             // start a transaction
             transaction = session.beginTransaction();
@@ -46,7 +50,7 @@ public class ProductDao_impl extends GenericDao_impl<Integer, CuonSachEntity> im
     public List<CuonSachEntity> FindByCate(int Cate) {
         List<CuonSachEntity> results =new ArrayList<CuonSachEntity>();
         Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         try  {
             // start a transaction
             transaction = session.beginTransaction();
@@ -76,7 +80,7 @@ public class ProductDao_impl extends GenericDao_impl<Integer, CuonSachEntity> im
     public List<ChiTietDonHangEntity> FindHot() {
         List<ChiTietDonHangEntity> results =new ArrayList<ChiTietDonHangEntity>();
         Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         try  {
             // start a transaction
             transaction = session.beginTransaction();
@@ -105,7 +109,7 @@ public class ProductDao_impl extends GenericDao_impl<Integer, CuonSachEntity> im
     public List<CuonSachEntity> Search(String TuKhoa) {
         List<CuonSachEntity> results =new ArrayList<CuonSachEntity>();
         Transaction transaction = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         try  {
             // start a transaction
             transaction = session.beginTransaction();

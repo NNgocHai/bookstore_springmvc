@@ -4,11 +4,15 @@ import com.bookstore.dao.CategoryDao;
 import com.bookstore.dao_impl.CategoryDao_impl;
 import com.bookstore.entity.CategoryEntity;
 import com.bookstore.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
-
+@Service
+@Transactional
 public class CategoryService_impl implements CategoryService  {
-
+    @Autowired
     public CategoryDao categoryDao=new CategoryDao_impl();
     public List<CategoryEntity> findAll(){
         return categoryDao.findAll();

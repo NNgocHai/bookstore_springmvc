@@ -2,22 +2,26 @@ package com.bookstore.dao_impl;
 
 import com.bookstore.dao.ShipperDao;
 import com.bookstore.entity.ShipperEntity;
-import com.bookstore.utils.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Repository
 public class ShipperDao_impl extends GenericDao_impl<Integer, ShipperEntity> implements ShipperDao{
+    @Autowired
+    SessionFactory factory;
     @Override
     public boolean checkShipperLogin(String username, String password) {
 
         boolean exist = false;
         Object a = new Object();
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         Transaction transaction = null;
         transaction = session.beginTransaction();
         try{
@@ -48,7 +52,7 @@ public class ShipperDao_impl extends GenericDao_impl<Integer, ShipperEntity> imp
 
     @Override
     public List<ShipperEntity> findByUser(String user) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
         List<ShipperEntity> userEntities = new ArrayList<ShipperEntity>();
         try {
@@ -68,7 +72,7 @@ public class ShipperDao_impl extends GenericDao_impl<Integer, ShipperEntity> imp
 
     @Override
     public List<ShipperEntity> findID() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
         List<ShipperEntity> userEntities = new ArrayList<ShipperEntity>();
         try {
