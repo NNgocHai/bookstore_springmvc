@@ -315,8 +315,6 @@ public class WebController {
         List<GioHangEntity> gioHangEntities = new ArrayList<GioHangEntity>();
         GioHangEntity gioHangEntity = new GioHangEntity();
         GioHangIDKey gioHangIDKey = new GioHangIDKey();
-        CustomerDao customerDao = new CustomerDao_impl();
-        /*        try {*/
         boolean a = customerDao.checkCustomerLogin(user, password);
         if (a) {
             int n = 0;
