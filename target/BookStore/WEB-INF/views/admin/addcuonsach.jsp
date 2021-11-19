@@ -32,7 +32,7 @@
                     <div class="card-body">
                         <div class="card-title">Thêm Cuốn sách</div>
                         <hr>
-                        <form:form action="" method="post" modelAttribute="product">
+                        <form:form action="" method="post" enctype="multipart/form-data" modelAttribute="product">
                             <div><b> <span style="color:red"> ${message}</span></b></div>
                             <div class="form-group">
                                 <label>Mã đầu sách</label>
@@ -55,11 +55,6 @@
                                 <span style="color:rgba(238,207,207,0.91)"><form:errors path="soluong"/></span>
                             </div>
                             <div class="form-group">
-                                <label>Ảnh cuốn sách</label>
-                                <form:input type="text" class="form-control" path="anh_CuonSach"/>
-                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="anh_CuonSach"/></span>
-                            </div>
-                            <div class="form-group">
                                 <label>Discount</label>
                                 <form:input type="text" class="form-control" path="discount"/>
                                 <span style="color:rgba(238,207,207,0.91)"><form:errors path="discount"/></span>
@@ -74,6 +69,9 @@
                                 <form:textarea type="text" class="form-control" path="mota"/>
                                 <span style="color:rgba(238,207,207,0.91)"><form:errors path="mota"/></span>
                             </div>
+                            <div>Image:</div>
+                            <input name="attachment" type="file">
+                            <hr>
                             <div class="form-footer">
                                 <button type="reset" class="btn btn-danger"><i class="fa fa-times"></i><a href="${pageContext.request.contextPath}/admin/product/list">Hủy</a></button>
                                 <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> Thêm</button>

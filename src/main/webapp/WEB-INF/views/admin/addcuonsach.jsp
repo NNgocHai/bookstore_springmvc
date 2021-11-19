@@ -32,7 +32,7 @@
                     <div class="card-body">
                         <div class="card-title">Thêm Cuốn sách</div>
                         <hr>
-                        <form:form action="" method="post" modelAttribute="product">
+                        <form:form action="" method="post" enctype="multipart/form-data" modelAttribute="product">
                             <div><b> <span style="color:red"> ${message}</span></b></div>
                             <div class="form-group">
                                 <label>Mã đầu sách</label>
@@ -69,7 +69,7 @@
                                 <form:textarea type="text" class="form-control" path="mota"/>
                                 <span style="color:rgba(238,207,207,0.91)"><form:errors path="mota"/></span>
                             </div>
-                            <div>Attachment File:</div>
+                            <div>Image:</div>
                             <input name="attachment" type="file">
                             <hr>
                             <div class="form-footer">
