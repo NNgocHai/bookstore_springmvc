@@ -20,7 +20,7 @@ import java.io.IOException;
 
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin2/")
 public class CategoryEdit {
     CategoryService categoryService=new CategoryService_impl();
 

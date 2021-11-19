@@ -5,21 +5,29 @@ import com.bookstore.service.ChiTietDonHangService;
 import com.bookstore.service_impl.ChiTietDonHangService_impl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin2/")
-public class CTDHViewDetails {
+@RequestMapping("/admin/")
+public class CTDonHangController {
+
+    @RequestMapping("chitietdonhang/list")
+    public String detailList( ModelMap model) {
+        ChiTietDonHangService chiTietDonHangService = new ChiTietDonHangService_impl();
+        List<ChiTietDonHangEntity> list = chiTietDonHangService.findSpec();
+        model.addAttribute("list", list);
+
+        return "admin/viewlistCTDH";
+    }
 
     @RequestMapping("chitietdonhang/details")
     public String doGet(HttpSession session,
                         @RequestParam("DH-id") String donhang_id,
-                        @RequestParam(value = "tenKH", required = false) String ten_KH,
                         ModelMap model) {
 
         if (session.getAttribute("user_admin") == null){
@@ -36,5 +44,4 @@ public class CTDHViewDetails {
             return "admin/viewlistCTDHdetails";
         }
     }
-
 }

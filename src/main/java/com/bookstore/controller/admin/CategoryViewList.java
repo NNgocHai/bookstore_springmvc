@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin2/")
 public class CategoryViewList {
 
     @RequestMapping("cate/list")

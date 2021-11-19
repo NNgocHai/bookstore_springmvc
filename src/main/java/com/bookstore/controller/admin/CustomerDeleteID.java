@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin2/")
 public class CustomerDeleteID {
     public CustomerDeleteID() {
         super();

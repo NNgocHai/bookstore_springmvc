@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.PrintWriter;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin2/")
 public class CustomerEdit  {
     public CustomerEdit() {
         super();

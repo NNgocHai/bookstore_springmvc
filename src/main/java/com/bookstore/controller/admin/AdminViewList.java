@@ -14,7 +14,7 @@ import javax.servlet.RequestDispatcher;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin2/")
 public class AdminViewList {
     public AdminViewList() {
         super();
