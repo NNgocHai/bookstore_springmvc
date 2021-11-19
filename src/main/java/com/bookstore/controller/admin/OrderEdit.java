@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin1/")
 public class OrderEdit {
     public OrderEdit(){super();}
 

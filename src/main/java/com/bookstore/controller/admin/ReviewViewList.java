@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping("admin")
+@RequestMapping("admin1")
 public class ReviewViewList{
     public ReviewViewList() {
         super();

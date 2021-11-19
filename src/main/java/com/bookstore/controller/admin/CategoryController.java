@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin1/")
 public class CategoryController {
 
     CategoryService categoryService =new CategoryService_impl();

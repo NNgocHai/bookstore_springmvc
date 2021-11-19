@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin1/")
 public class ProductEdit {
     public ProductEdit(){super();}
     ProductService productService=new ProductService_impl();

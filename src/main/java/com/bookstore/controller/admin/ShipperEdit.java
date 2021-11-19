@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin1/")
 public class ShipperEdit {
     public ShipperEdit() {
         super();

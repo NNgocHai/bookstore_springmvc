@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin1/")
 public class CTDonHangController {
 
     @RequestMapping("chitietdonhang/list")

@@ -25,7 +25,7 @@ import java.util.List;
 
 @Controller
 //@WebServlet("/admin/giaohang/phancong_2")
-@RequestMapping("/admin/")
+@RequestMapping("/admin1/")
 public class GiaoHangPhanCongNV_2 {
 
     @RequestMapping("giaohang/phancong_2")

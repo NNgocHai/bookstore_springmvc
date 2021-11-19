@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/admin/")
+@RequestMapping(value = "/admin1/")
 public class ProductDelete{
     public ProductDelete(){super();}
     @RequestMapping(value = "product/delete", method = RequestMethod.GET)

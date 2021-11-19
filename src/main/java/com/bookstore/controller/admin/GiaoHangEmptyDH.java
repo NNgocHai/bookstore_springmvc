@@ -13,8 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/admin/")
-@WebServlet("/admin/giaohang/empty")
+@RequestMapping("/admin1/")
 public class GiaoHangEmptyDH {
     @RequestMapping("giaohang/empty")
     public String doGet(ModelMap model) {

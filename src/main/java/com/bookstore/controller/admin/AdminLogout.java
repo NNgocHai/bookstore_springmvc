@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin1/")
 public class AdminLogout {
     private static final long serialVersionUID = 1L;
 

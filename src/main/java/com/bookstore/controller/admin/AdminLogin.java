@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin1/")
 public class AdminLogin {
 
     public AdminLogin() {

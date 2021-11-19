@@ -24,7 +24,7 @@ import java.util.List;
 
 @Controller
 
-@RequestMapping("/admin/")
+@RequestMapping("/admin1/")
 public class GiaoHangPhanCongNV {
     public GiaoHangPhanCongNV(){super();}
     @RequestMapping(value = "giaohang/phancong", method = RequestMethod.GET)

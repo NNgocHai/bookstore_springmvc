@@ -18,7 +18,7 @@ import com.bookstore.dao_impl.NavigationDao_impl;
         import java.io.IOException;
 
 @Controller
-@RequestMapping("/admin/")
+@RequestMapping("/admin1/")
 public class ProductViewList2 {
     public ProductViewList2() {
         super();
