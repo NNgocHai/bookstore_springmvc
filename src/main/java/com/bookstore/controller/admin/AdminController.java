@@ -699,9 +699,6 @@ public class AdminController {
         if (product.getTacgia().toString().trim().length() == 0) {
             errors.rejectValue("tacgia", "product", "Vui lòng nhập tên tác giả!");
         }
-        if (product.getAnh_CuonSach().toString().trim().length() == 0) {
-            errors.rejectValue("anh_CuonSach", "product", "Vui lòng nhập ảnh!");
-        }
         if (product.getDiscount()== null) {
             errors.rejectValue("discount", "product", "Vui lòng nhập discount!");
         }
@@ -715,7 +712,10 @@ public class AdminController {
         }
 
         try {
+
             productService.save(product);
+
+
             model.addAttribute("message", "Thêm thành công!");
             return "redirect:/admin/product/add";
         } catch (Exception e) {
