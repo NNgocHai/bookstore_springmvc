@@ -28,12 +28,14 @@ public class SendingEmail {
         final String pword="Tu18110387";
         try{
             MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            MimeMessageHelper helper = new MimeMessageHelper(message, true,"utf-8");
             helper.setFrom(email);
             helper.setTo(userEmail);
             helper.setReplyTo(email);
-            helper.setSubject("User Email Verification");
-            String body="Use this code: "+code+" to finished registation";
+            helper.setSubject("Xác nhận tài khoản");
+            String body= "<p>Mã xác nhân của bạn là: "+"<span>"+String.valueOf(code)+"</span></p>"
+                    +"<p>Sử dụng mã trên để hoàn thành đăng kí tài khoản.</p>";;
+            String text="Use this code: "+code+" to finished registation";
             helper.setText(body, true);
             mailSender.send(message);
         }
