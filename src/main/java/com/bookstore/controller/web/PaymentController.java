@@ -33,6 +33,8 @@ public class PaymentController {
     ProductService productService = new ProductService_impl();
     @Autowired
     DonHangService donHangService = new DonHangService_impl();
+    @Autowired
+    ConfirmPayment confirmPayment = new ConfirmPayment();
 
     @RequestMapping("/web/payhelp")
     public String PayHelp() {
@@ -118,7 +120,7 @@ public class PaymentController {
 
         model.addAttribute("sucess", "Đặt hàng thành công");
         int ma_dh = donHangEntity.getMa_DH();
-        ConfirmPayment confirmPayment = new ConfirmPayment(ma_dh, user_email);
+        confirmPayment.ConfirmPayment1(ma_dh, user_email);
 
         return "web/checkout";
     }

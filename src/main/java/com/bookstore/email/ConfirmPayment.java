@@ -22,7 +22,7 @@ public class ConfirmPayment {
     JavaMailSender mailSender;
 
 
-    public void ConfirmPayment(int Ma_DH,String userEmail)
+    public void ConfirmPayment1(int Ma_DH,String userEmail)
     {
         final String  email="cuahangsachso6@gmail.com";
         final String pword="Tu18110387";
