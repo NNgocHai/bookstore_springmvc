@@ -65,7 +65,7 @@ public class PaymentController {
         LocalDateTime now = LocalDateTime.now();
         Boolean isCheck = false;
 
-        if(transaction_payment == "1")
+        if(transaction_payment.equals("1") )
             isCheck = true;
         if (isCheck == true) {
 
@@ -92,7 +92,7 @@ public class PaymentController {
         donHangEntity.setNgaydat(Timestamp.valueOf((now)));
         donHangEntity.setTongtien(tongtien);
         donHangEntity.setActiveDH("Chưa giao");
-        donHangEntity.setActiveDH("Chưa thanh toán");
+        donHangEntity.setGhichu("Chưa thanh toán");
         donHangEntity = donHangService.save(donHangEntity);
 
         for (GioHangEntity Order : Orders) {
