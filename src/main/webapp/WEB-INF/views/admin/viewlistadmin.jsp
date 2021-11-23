@@ -1,20 +1,13 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+
 <%
-    //    response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
-//    response.setHeader("Pragma" , "no-cache");
-//    response.setHeader("Expires" , "0");
-
-
     if (session.getAttribute("user_admin") == null){
         response.sendRedirect(request.getContextPath() + "/admin/login");
     }
 %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+
 <div class="content-wrapper">
     <div class="container-fluid">
         <!--End Row-->
@@ -28,7 +21,14 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Danh sách Admin</h5>
-                        <div><b> <span style="color:rgba(238,207,207,0.91)"> ${message}</span></b></div>
+                        <c:choose>
+                            <c:when test="${fn:contains(message, 'thành công')}">
+                                <div><b> <span style="color:green"> ${message}</span></b></div>
+                            </c:when>
+                            <c:otherwise>
+                                <div><b> <span style="color:red"> ${message}</span></b></div>
+                            </c:otherwise>
+                        </c:choose>
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead>
@@ -62,5 +62,4 @@
         </div>
     </div>
 </div>
-</body>
-</html>
+

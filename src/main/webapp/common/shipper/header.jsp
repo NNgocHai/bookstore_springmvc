@@ -1,6 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ include file="/common/taglib.jsp"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:url value ="/template/admin" var="url"/>
 
 <div id="pageloader-overlay" class="visible incoming">

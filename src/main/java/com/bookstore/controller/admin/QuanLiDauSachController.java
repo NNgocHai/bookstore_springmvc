@@ -1,14 +1,7 @@
 package com.bookstore.controller.admin;
 
-import com.bookstore.dao.AdminDao;
-import com.bookstore.dao.DonHangDao;
-import com.bookstore.dao.ShipperDao;
-import com.bookstore.dao_impl.AdminDao_impl;
-import com.bookstore.dao_impl.DonHangDao_impl;
-import com.bookstore.dao_impl.NavigationDao_impl;
-import com.bookstore.dao_impl.ShipperDao_impl;
+
 import com.bookstore.entity.CategoryEntity;
-import com.bookstore.entity.CuonSachEntity;
 import com.bookstore.service.*;
 import com.bookstore.service_impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.ServletContext;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,23 +44,24 @@ public class QuanLiDauSachController {
     public String addCate(@ModelAttribute("category") CategoryEntity cate,
                           ModelMap model, BindingResult errors) {
 
-        try{
             if(cate.getTen_DauSach().equals("") ||
                     cate.getTen_DauSach().trim().length() == 0){
                 errors.rejectValue("ten_DauSach", "cate", "Vui lòng điền tên đầu sách");
             }
-            else{
-                categoryService.save(cate);
-                model.addAttribute("message", "Thêm đầu sách thành công!");
-                return "redirect:/admin/cate/add";
-            }
-        }
-        catch (Exception e)
-        {
+        if (errors.hasErrors()) {
             model.addAttribute("category", cate);
-            model.addAttribute("message", "Thêm đầu sách thất bại");
+            model.addAttribute("message", "Vui lòng sửa các lỗi sau đây!");
+            return "admin/addcategory";
         }
-        return "admin/addcategory";
+        try {
+            model.addAttribute("message", "Thêm thành công!");
+            categoryService.save(cate);
+            return "redirect:/admin/cate/add";
+        } catch (Exception e) {
+            model.addAttribute("category", cate);
+            model.addAttribute("message", "Thêm thất bại!");
+            return "admin/addcategory";
+        }
         //return "redirect:/admin/cate/list";
     }
 
@@ -87,29 +78,27 @@ public class QuanLiDauSachController {
     @RequestMapping(value = "cate/edit", method = RequestMethod.POST)
     public String editCate(@RequestParam("category-id") String cate_id,
                            @ModelAttribute("category") CategoryEntity categoryEntity,
-                           ModelMap model, BindingResult errors,
-                           final RedirectAttributes redirectAttributes) {
+                           ModelMap model, BindingResult errors) {
 
         if(categoryEntity.getTen_DauSach().equals("") ||
                 categoryEntity.getTen_DauSach().trim().length() == 0){
             errors.rejectValue("ten_DauSach", "cate", "Vui lòng điền tên đầu sách");
         }
-
-        if(!categoryEntity.getMa_DauSach().equals("") ||
-                !categoryEntity.getTen_DauSach().equals(""))
-        {
-            categoryService.update(categoryEntity);
-            redirectAttributes.addFlashAttribute("message", "Đã chỉnh sửa id: " + cate_id + " thành công");
-            return "redirect:/admin/cate/list";
-        }
-        else {
-
-            model.addAttribute("message","Tên đầu sách trống");
-            model.addAttribute("category_id",cate_id);
-
+        if (errors.hasErrors()) {
+            model.addAttribute("category", categoryEntity);
+            model.addAttribute("message", "Vui lòng sửa lỗi sau đây!");
             return "admin/editcategory";
         }
 
+        try {
+            model.addAttribute("message", "Cập nhật thành công!");
+            categoryService.update(categoryEntity);
+            return "admin/editcategory";
+        } catch (Exception e) {
+            model.addAttribute("category", categoryEntity);
+            model.addAttribute("message", "Cập nhật thất bại!");
+            return "admin/editcategory";
+        }
     }
 
     @RequestMapping("cate/delete")

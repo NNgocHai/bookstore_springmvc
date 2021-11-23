@@ -7,25 +7,10 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
-    //    response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
-//    response.setHeader("Pragma" , "no-cache");
-//    response.setHeader("Expires" , "0");
-
-
     if (session.getAttribute("user_admin") == null) {
         response.sendRedirect(request.getContextPath() + "/admin/login");
     }
-
-
 %>
-
-
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-</head>
-<body>
-
 <div class="content-wrapper">
     <div class="container-fluid">
         <div class="row mt-3">
@@ -90,5 +75,4 @@
         }
     });
 </script>
-</body>
-</html>
+

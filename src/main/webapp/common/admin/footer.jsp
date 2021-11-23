@@ -1,5 +1,3 @@
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <a href="" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>

@@ -1,13 +1,5 @@
 package com.bookstore.controller.admin;
 
-import com.bookstore.dao.AdminDao;
-import com.bookstore.dao.DonHangDao;
-import com.bookstore.dao.ShipperDao;
-import com.bookstore.dao_impl.AdminDao_impl;
-import com.bookstore.dao_impl.DonHangDao_impl;
-import com.bookstore.dao_impl.NavigationDao_impl;
-import com.bookstore.dao_impl.ShipperDao_impl;
-import com.bookstore.entity.CuonSachEntity;
 import com.bookstore.entity.DonHangEntity;
 import com.bookstore.service.*;
 import com.bookstore.service_impl.*;
@@ -19,8 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.ServletContext;
 import java.util.ArrayList;
 import java.util.List;
 

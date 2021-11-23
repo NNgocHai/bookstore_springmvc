@@ -32,6 +32,9 @@ public class DonHangEntity implements Serializable {
 
     @Column(name = "tinhtrang")
     private String activeDH;
+    @Column(name= "ghichu")
+    private String ghichu;
+
 
 
     @ManyToOne
@@ -123,5 +126,11 @@ public class DonHangEntity implements Serializable {
     public void setCustomerEntity(CustomerEntity customerEntity) {
         this.customerEntity = customerEntity;
     }
+    public String getGhichu() {
+        return ghichu;
+    }
 
+    public void setGhichu(String ghichu) {
+        this.ghichu = ghichu;
+    }
 }

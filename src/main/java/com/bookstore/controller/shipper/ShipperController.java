@@ -59,6 +59,7 @@ public class ShipperController {
             DonHangEntity donHangEntity = donHangService.findById(dh_id);
             donHangEntity.setMa_DH(dh_id);
             donHangEntity.setActiveDH("Đã giao");
+            donHangEntity.setGhichu("Đã thanh toán");
             donHangService.update(donHangEntity);
             return "redirect:/shipper/home";
         }

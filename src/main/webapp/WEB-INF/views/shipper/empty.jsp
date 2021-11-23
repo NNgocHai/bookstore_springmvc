@@ -1,16 +1,6 @@
 
-Created by IntelliJ IDEA.
-User: HIEU
-Date: 1/9/2021
-Time: 8:50 AM
-To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+<%@ page contentType="text/html;charset=UTF-8"%>
+
 <div class="content-wrapper">
     <div class="col-lg-12">
 
@@ -24,5 +14,4 @@ To change this template use File | Settings | File Templates.
         </div>
     </div>
 </div>
-</body>
-</html>
+

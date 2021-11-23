@@ -1,12 +1,8 @@
 package com.bookstore.controller.admin;
 
-import com.bookstore.dao.AdminDao;
-import com.bookstore.dao.DonHangDao;
-import com.bookstore.dao.ShipperDao;
-import com.bookstore.dao_impl.AdminDao_impl;
-import com.bookstore.dao_impl.DonHangDao_impl;
+
 import com.bookstore.dao_impl.NavigationDao_impl;
-import com.bookstore.dao_impl.ShipperDao_impl;
+import com.bookstore.entity.CategoryEntity;
 import com.bookstore.entity.CuonSachEntity;
 import com.bookstore.service.*;
 import com.bookstore.service_impl.*;
@@ -33,6 +29,8 @@ public class QuanLiCuonSachController {
     NavigationDao_impl<CuonSachEntity> navigationDaoImpl = new NavigationDao_impl<CuonSachEntity>();
     @Autowired
     ServletContext context;
+    @Autowired
+    CategoryService categoryService = new CategoryService_impl();
 
     @RequestMapping(value = "product/add", method = RequestMethod.GET)
     public String ProductAdd(ModelMap model, @ModelAttribute(value = "message") String message) {
@@ -44,7 +42,7 @@ public class QuanLiCuonSachController {
 
     @RequestMapping(value = "product/add", method = RequestMethod.POST)
     public String ProductAdd(@ModelAttribute("product") CuonSachEntity product,
-                             @RequestParam("attachment") MultipartFile file,
+                             @RequestParam("image") MultipartFile file,
                              ModelMap model, BindingResult errors) {
         if (product.getMa_DauSach()== null) {
             errors.rejectValue("ma_DauSach", "product", "Vui lòng nhập mã đầu sách!");
@@ -74,15 +72,18 @@ public class QuanLiCuonSachController {
         }
 
         if (file.isEmpty()) {
-            model.addAttribute("message", "Vui lòng chon file !");
+            model.addAttribute("product", product);
+            model.addAttribute("message", "Vui lòng chọn ảnh !");
+            return "admin/addcuonsach";
         } else {
             try {
                 String photoPath = context.getRealPath("/")+"template/web/images/products/img-test/" + file.getOriginalFilename();
                 file.transferTo(new File(photoPath));
                 product.setAnh_CuonSach(file.getOriginalFilename());
-                model.addAttribute("photo_name", file.getOriginalFilename());
             } catch (Exception e) {
+                model.addAttribute("product", product);
                 model.addAttribute("message", "Lỗi lưu file !");
+                return "admin/addcuonsach";
             }
         }
         try {
@@ -123,7 +124,9 @@ public class QuanLiCuonSachController {
 
     @RequestMapping(value = "product/edit", method = RequestMethod.POST)
     public String ProductEdit(@ModelAttribute("product") CuonSachEntity product,
-                              ModelMap model, BindingResult errors, @RequestParam("cuonsach_id") String cuonsach_id) {
+                              @RequestParam("image") MultipartFile file,
+                              ModelMap model, BindingResult errors,
+                              @RequestParam("cuonsach_id") String cuonsach_id) {
         product.setMa_CuonSach(Integer.parseInt(cuonsach_id));
         if (product.getMa_DauSach()== null) {
             errors.rejectValue("ma_DauSach", "product", "Vui lòng nhập mã đầu sách!");
@@ -140,9 +143,6 @@ public class QuanLiCuonSachController {
         if (product.getTacgia().toString().trim().length() == 0) {
             errors.rejectValue("tacgia", "product", "Vui lòng nhập tên tác giả!");
         }
-        if (product.getAnh_CuonSach().toString().trim().length() == 0) {
-            errors.rejectValue("anh_CuonSach", "product", "Vui lòng nhập ảnh!");
-        }
         if (product.getDiscount()== null) {
             errors.rejectValue("discount", "product", "Vui lòng nhập discount!");
         }
@@ -150,14 +150,31 @@ public class QuanLiCuonSachController {
             errors.rejectValue("mota", "product", "Vui lòng nhập mô tả!");
         }
         if (errors.hasErrors()) {
+            product = productService.findById(product.getMa_CuonSach());
             model.addAttribute("product", product);
             model.addAttribute("message", "Vui lòng sửa các lỗi sau đây!");
             return "admin/editcuonsach";
         }
 
+        if (file.isEmpty()) {
+            product = productService.findById(product.getMa_CuonSach());
+            model.addAttribute("product", product);
+            model.addAttribute("message", "Vui lòng chọn ảnh !");
+            return "admin/editcuonsach";
+        } else {
+            try {
+                String photoPath = context.getRealPath("/")+"template/web/images/products/img-test/" + file.getOriginalFilename();
+                file.transferTo(new File(photoPath));
+                product.setAnh_CuonSach(file.getOriginalFilename());
+            } catch (Exception e) {
+                model.addAttribute("product", product);
+                model.addAttribute("message", "Lỗi lưu file !");
+                return "admin/editcuonsach";
+            }
+        }
         try {
-            model.addAttribute("message", "Cập nhật thành công!");
             productService.update(product);
+            model.addAttribute("message", "Cập nhật thành công!");
             return "admin/editcuonsach";
         } catch (Exception e) {
             model.addAttribute("product", product);
@@ -179,8 +196,11 @@ public class QuanLiCuonSachController {
         model.addAttribute("cuonsachList", navigationDaoImpl.getList());
         model.addAttribute("navigationDaoImpl", navigationDaoImpl);
         model.addAttribute("message",   message);
-
         return "admin/viewlistcuonsach";
-
+    }
+    @ModelAttribute("cates")
+    public List<CategoryEntity> getCates(){
+        List<CategoryEntity> list = categoryService.findAll();
+        return list;
     }
 }

@@ -1,28 +1,14 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Lenovo
-  Date: 1/9/2021
-  Time: 1:11 PM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-    //    response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
-//    response.setHeader("Pragma" , "no-cache");
-//    response.setHeader("Expires" , "0");
-
-
     if (session.getAttribute("user_admin") == null){
         response.sendRedirect(request.getContextPath() + "/admin/login");
     }
 %>
-<html>
-<head>
-    <title>Thêm Shipper</title>
-</head>
-<body>
+
 <div class="content-wrapper">
     <div class="container-fluid">
 
@@ -32,12 +18,19 @@
                     <div class="card-body">
                         <div class="card-title">Thêm Shipper</div>
                         <hr>
+                        <c:choose>
+                            <c:when test="${fn:contains(message, 'thành công')}">
+                                <div><b> <span style="color:green"> ${message}</span></b></div>
+                            </c:when>
+                            <c:otherwise>
+                                <div><b> <span style="color:red"> ${message}</span></b></div>
+                            </c:otherwise>
+                        </c:choose>
                         <form:form action="" method="post" modelAttribute="shipper">
-                            <div><b> <span style="color:red"> ${message}</span></b></div>
                             <div class="form-group">
                                 <label >Username</label>
                                 <form:input type="text" class="form-control" path="taikhoan_Shipper"/>
-                            <span style="color:rgba(238,207,207,0.91)"><form:errors path="taikhoan_Shipper"/></span>
+                            <span style="color:red"><form:errors path="taikhoan_Shipper"/></span>
                             </div>
                             <div class="form-group">
                                 <label >Password</label>
@@ -52,7 +45,7 @@
                                         x.type = "password";
                                     }
                                 }</script>
-                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="matkhau_Shipper"/></span>
+                                <span style="color:red"><form:errors path="matkhau_Shipper"/></span>
                             </div>
                             <div class="form-group">
                                 <label >Họ và tên</label>
@@ -62,11 +55,11 @@
                             <div class="form-group">
                                 <label>Email</label>
                                 <form:input type="email" class="form-control" path="gmail_Shipper"/>
-                                <span style="color:rgba(238,207,207,0.91)"><form:errors path="gmail_Shipper"/></span>
+                                <span style="color:red"><form:errors path="gmail_Shipper"/></span>
                             </div>
                             <div class="form-footer">
                                 <button type="reset" class="btn btn-danger"><i class="fa fa-times"></i><a href="${pageContext.request.contextPath}/admin/ship/list">Hủy</a></button>
-                            <input type="submit"  value="Thêm" name="add" class="btn btn-success"/>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> Thêm</button>
                             </div>
                         </form:form>
                     </div>
@@ -76,7 +69,4 @@
         <div class="overlay toggle-menu"></div>
     </div>
 </div>
-
-</body>
-</html>
 

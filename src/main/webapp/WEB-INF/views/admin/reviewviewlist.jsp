@@ -1,32 +1,14 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Lenovo
-  Date: 1/9/2021
-  Time: 11:07 AM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-    //    response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
-//    response.setHeader("Pragma" , "no-cache");
-//    response.setHeader("Expires" , "0");
-
-
     if (session.getAttribute("user_admin") == null){
         response.sendRedirect(request.getContextPath() + "/admin/login");
     }
 %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
 <div class="content-wrapper">
     <div class="container-fluid">
         <!--End Row-->
-
-
         <div class="row">
 
             <div class="col-lg-12">
@@ -62,5 +44,4 @@
         </div>
     </div>
 </div>
-</body>
-</html>
+

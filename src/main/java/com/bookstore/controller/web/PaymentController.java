@@ -36,6 +36,9 @@ public class PaymentController {
     @Autowired
     ConfirmPayment confirmPayment = new ConfirmPayment();
 
+    String address,phone,user_email;
+
+
     @RequestMapping("/web/payhelp")
     public String PayHelp() {
         return "web/payhelp";
@@ -46,21 +49,42 @@ public class PaymentController {
     public String Payment(@RequestParam("address") String address,
                           @RequestParam("phone") String phone,
                           @RequestParam("email") String user_email,
+                          @RequestParam("transaction_payment") String transaction_payment,
                           HttpSession session,
                           ModelMap model) {
-
-
+        this.address = address;
+        this.phone = phone;
+        this.user_email =user_email;
         DonHangEntity donHangEntity = new DonHangEntity();
         CuonSachEntity cuonSachEntity = new CuonSachEntity();
         List<CuonSachEntity> cuonSachEntities = new ArrayList<CuonSachEntity>();
         cuonSachEntities = productService.findAll();
-
         CustomerEntity person = (CustomerEntity) session.getAttribute("person");
         int tongtien = (int) session.getAttribute("tongtien");
         List<GioHangEntity> Orders = (List<GioHangEntity>) session.getAttribute("Orders");
-
         LocalDateTime now = LocalDateTime.now();
+        Boolean isCheck = false;
 
+        if(transaction_payment == "1")
+            isCheck = true;
+        if (isCheck == true) {
+
+            String chuoi = "";
+            chuoi += "upload=1";
+            chuoi += "&&return=http://localhost:8080/bookstore_springmvc_war_exploded/web/paysuccess";
+            chuoi += "&&cmd=_cart";
+            chuoi += "&&business=chuShop@gmail.com";
+
+            int i = 1;
+
+            for (GioHangEntity Order : Orders) {
+                chuoi += removeAccent("&&item_name_" + i + "=" + Order.getCuonSachEntity().getTen_CuonSach());
+                chuoi += "&&quantity_" + i + "=" + Order.getSoluong();
+                chuoi += "&&amount_" + i + "=" + (Order.getCuonSachEntity().getGiabia() / 24000);
+                i++;
+            }
+            return "redirect:https://www.sandbox.paypal.com/cgi-bin/webscr?" + chuoi;
+        }
         gioHangService.DeletebyCustomer(person.getMa_Customer());
         donHangEntity.setMa_Customer(person.getMa_Customer());
         donHangEntity.setDiachi(address);
@@ -68,6 +92,7 @@ public class PaymentController {
         donHangEntity.setNgaydat(Timestamp.valueOf((now)));
         donHangEntity.setTongtien(tongtien);
         donHangEntity.setActiveDH("Chưa giao");
+        donHangEntity.setActiveDH("Chưa thanh toán");
         donHangEntity = donHangService.save(donHangEntity);
 
         for (GioHangEntity Order : Orders) {
@@ -92,29 +117,6 @@ public class PaymentController {
 
         session.removeAttribute("length_orders");
         session.removeAttribute("tongtien");
-
-        Boolean isCheck = true;
-
-        if (isCheck == true) {
-
-            String chuoi = "";
-            chuoi += "upload=1";
-            chuoi += "&&return=http://localhost:8080/bookstore_springmvc_war_exploded/web/paysuccess";
-            chuoi += "&&cmd=_cart";
-            chuoi += "&&business=chuShop@gmail.com";
-
-            int i = 1;
-
-            for (GioHangEntity Order : Orders) {
-                chuoi += removeAccent("&&item_name_" + i + "=" + Order.getCuonSachEntity().getTen_CuonSach());
-                chuoi += "&&quantity_" + i + "=" + Order.getSoluong();
-                chuoi += "&&amount_" + i + "=" + (Order.getCuonSachEntity().getGiabia() / 24000);
-                i++;
-            }
-
-            return "redirect:https://www.sandbox.paypal.com/cgi-bin/webscr?" + chuoi;
-        }
-
         Orders.clear();
         session.setAttribute("Orders", Orders);
 
@@ -169,22 +171,57 @@ public class PaymentController {
     @RequestMapping("/web/paysuccess")
     public String PayPalSuccess(HttpSession session,
                                 ModelMap model) {
+        DonHangEntity donHangEntity = new DonHangEntity();
+        CuonSachEntity cuonSachEntity = new CuonSachEntity();
+        List<CuonSachEntity> cuonSachEntities = new ArrayList<CuonSachEntity>();
+        cuonSachEntities = productService.findAll();
+        CustomerEntity person = (CustomerEntity) session.getAttribute("person");
+        int tongtien = (int) session.getAttribute("tongtien");
         List<GioHangEntity> Orders = (List<GioHangEntity>) session.getAttribute("Orders");
-
+        LocalDateTime now = LocalDateTime.now();
+        Boolean isCheck = false;
+        gioHangService.DeletebyCustomer(person.getMa_Customer());
+        donHangEntity.setMa_Customer(person.getMa_Customer());
+        donHangEntity.setDiachi(address);
+        donHangEntity.setSdt(phone);
+        donHangEntity.setNgaydat(Timestamp.valueOf((now)));
+        donHangEntity.setTongtien(tongtien);
+        donHangEntity.setActiveDH("Chưa giao");
+        donHangEntity.setGhichu("Đã thanh toán");
+        donHangEntity = donHangService.save(donHangEntity);
+        for (GioHangEntity Order : Orders) {
+            ChiTietDonHangEntity chiTietDonHangEntity = new ChiTietDonHangEntity();
+            ChiTietDonHangIDKey chiTietDonHangIDKey = new ChiTietDonHangIDKey();
+            chiTietDonHangIDKey.setMa_CuonSach(Order.getCuonSachEntity().getMa_CuonSach());
+            chiTietDonHangIDKey.setMa_DH(donHangEntity.getMa_DH());
+            chiTietDonHangEntity.setId(chiTietDonHangIDKey);
+            chiTietDonHangEntity.setSoluong(Order.getSoluong());
+            chiTietDonHangEntity.setGia(Order.getCuonSachEntity().getGiabia());
+            chiTietDonHangService.save(chiTietDonHangEntity);
+            //Trừ số lượng trong kho
+            cuonSachEntity = Order.getCuonSachEntity();
+            cuonSachEntity.setSoluong(cuonSachEntity.getSoluong() - Order.getSoluong());
+            for (CuonSachEntity product : cuonSachEntities) {
+                if (Order.getCuonSachEntity().getMa_CuonSach() == product.getMa_CuonSach())
+                    cuonSachEntity.setGiabia(product.getGiabia());
+            }
+            productService.update(cuonSachEntity);
+        }
+        session.removeAttribute("length_orders");
+        session.removeAttribute("tongtien");
         Orders.clear();
         session.setAttribute("Orders", Orders);
-
-        model.addAttribute("sucess", "Đặt hàng và thanh toán thành công");
-
+        model.addAttribute("sucess", "Đặt hàng thành công");
+        int ma_dh = donHangEntity.getMa_DH();
+        confirmPayment.ConfirmPayment1(ma_dh, user_email);
         return "web/checkout";
 
     }
     @RequestMapping("/web/checkout")
     public String Checkout(HttpSession session, ModelMap model) {
         List<CuonSachEntity> cuonSachEntities = new ArrayList<CuonSachEntity>();
-
         List<GioHangEntity> Orders = (List<GioHangEntity>) session.getAttribute("Orders");
-        if (Orders == null) {
+        if (Orders == null || session.getAttribute("length_orders") == null) {
             model.addAttribute("error", "Bạn chưa có cuốn sách nào trong giỏ hàng");
             return "web/CartDetail";
         } else {
@@ -197,7 +234,8 @@ public class PaymentController {
                     if (Order.getCuonSachEntity().getMa_CuonSach() == product.getMa_CuonSach()) {
                         if (Order.getSoluong() > product.getSoluong()) {
                             check_soluong = 0;
-                            errorsoluong = "Sách này:" + Order.getCuonSachEntity().getTen_CuonSach() + " Vượt quá số lương của kho:" + product.getSoluong() + "";
+                            errorsoluong = "Sách này:" + Order.getCuonSachEntity().getTen_CuonSach()
+                                    + " Vượt quá số lương của kho:" + product.getSoluong() + "";
                             break;
                         }
                     }
@@ -206,15 +244,11 @@ public class PaymentController {
             if (length_orders == 0) {
                 model.addAttribute("error", "Bạn chưa có cuốn sách nào trong giỏ hàng");
                 return "web/CartDetail";
-
-
             }
             if (check_soluong == 0) {
                 model.addAttribute("cuonSachEntityList", cuonSachEntities);
                 model.addAttribute("error", errorsoluong);
-
                 return "web/CartDetail";
-
             } else {
                 return "web/checkout";
 

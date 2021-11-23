@@ -1,7 +1,6 @@
-<%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ include file="/common/taglib.jsp"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="dec" %>
 <c:url value ="/template/admin" var="url"/>
 <!DOCTYPE html>
 <html lang="en">

@@ -2,7 +2,6 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ include file="/common/taglib.jsp" %>
 <c:url value="/template/web" var="url"/>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 

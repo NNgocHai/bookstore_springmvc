@@ -1,35 +1,16 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Lenovo
-  Date: 1/7/2021
-  Time: 12:47 AM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:url value = "/template/web" var="url"/>
-
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%
-    //    response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
-//    response.setHeader("Pragma" , "no-cache");
-//    response.setHeader("Expires" , "0");
-
-
     if (session.getAttribute("user_admin") == null){
         response.sendRedirect(request.getContextPath() + "/admin/login");
     }
 %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
 <div class="content-wrapper">
     <div class="container-fluid">
         <!--End Row-->
-
-
         <div class="row">
             <div class="col-lg-12">
                 <button class="add-catalog"><a href="${pageContext.request.contextPath}/admin/product/add">Thêm Cuốn sách</a></button>
@@ -39,11 +20,18 @@
                     <div class="card-body">
                         <h5 class="card-title">Danh sách Cuốn sách</h5>
                         <div class="table-responsive">
-                            <div><b> <span style="color:red"> ${message}</span></b></div>
+                            <c:choose>
+                                <c:when test="${fn:contains(message, 'thành công')}">
+                                    <div><b> <span style="color:green"> ${message}</span></b></div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div><b> <span style="color:red"> ${message}</span></b></div>
+                                </c:otherwise>
+                            </c:choose>
                             <table class="table tablee table-striped">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Mã Đầu Sách</th>
+                                    <th scope="col">Đầu Sách</th>
                                     <th scope="col" class="limit-width"><span>Tên Cuốn Sách</span></th>
                                     <th scope="col">Tác Giả</th>
                                     <th scope="col">Số Lượng</th>
@@ -56,7 +44,7 @@
                                 <tbody>
                                 <c:forEach items="${cuonsachList}" var="cuonsach">
                                     <tr>
-                                        <td>${cuonsach.ma_DauSach}</td>
+                                        <td>${cuonsach.getCategoryEntity().getTen_DauSach()}</td>
                                         <td class="limit-width"><span>${cuonsach.ten_CuonSach}</span></td>
                                         <td>${cuonsach.tacgia}</td>
                                         <td>${cuonsach.soluong}</td>
@@ -102,5 +90,4 @@
         </nav>
     </div>
 </c:if>
-</body>
-</html>
+

@@ -1,18 +1,8 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: HIEU
-  Date: 1/14/2021
-  Time: 1:41 PM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <c:url value = "/template/web" var="url"/>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+
 <section id="aa-catg-head-banner">
     <img src="${url}/images/new/bannercs.png" alt="banner sản phẩm">
     <div class="aa-catg-head-banner-area">
@@ -53,5 +43,3 @@
     </div>
 </section>
 
-</body>
-</html>

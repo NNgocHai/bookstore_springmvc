@@ -26,7 +26,7 @@ public class GiaoHangDao_impl extends GenericDao_impl<Integer, GiaoHangEntity> i
         String a = "Chưa giao";
         try {
             StringBuilder sql = new StringBuilder("Select donHangEntity.ma_DH, donHangEntity.customerEntity.hoten_Customer, ");
-            sql.append("donHangEntity.diachi, donHangEntity.sdt, donHangEntity.tongtien, donHangEntity.activeDH");
+            sql.append("donHangEntity.diachi, donHangEntity.sdt, donHangEntity.tongtien, donHangEntity.activeDH,donHangEntity.ghichu");
             sql.append(" From GiaoHangEntity ");
             sql.append(" where shipperEntity.ma_Shipper = :value");
             sql.append(" and donHangEntity.activeDH = :value1");

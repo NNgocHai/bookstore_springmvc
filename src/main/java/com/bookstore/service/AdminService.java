@@ -13,4 +13,5 @@ public interface AdminService {
     AdminsEntity update(AdminsEntity T);
     AdminsEntity findById(int var1);
 
+
 }

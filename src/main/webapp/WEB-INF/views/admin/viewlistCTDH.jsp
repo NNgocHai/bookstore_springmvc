@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 
@@ -7,11 +7,6 @@
         response.sendRedirect(request.getContextPath() + "/admin/login");
     }
 %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
 <div class="content-wrapper">
     <div class="container-fluid">
         <!--End Row-->
@@ -50,5 +45,4 @@
         </div>
     </div>
 </div>
-</body>
-</html>
+

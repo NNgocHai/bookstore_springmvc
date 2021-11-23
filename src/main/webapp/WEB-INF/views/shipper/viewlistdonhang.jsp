@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 
@@ -7,11 +7,6 @@
         response.sendRedirect(request.getContextPath() + "/shipper/login");
     }
 %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
 <div class="content-wrapper">
     <div class="container-fluid">
         <!--End Row-->
@@ -32,6 +27,7 @@
                                     <th scope="col">SĐT</th>
                                     <th scope="col">Tổng tiền</th>
                                     <th scope="col">Tình Trạng</th>
+                                    <th scope="col">Ghi chú</th>
                                     <th scope="col">Hành động</th>
                                 </tr>
                                 </thead>
@@ -44,6 +40,7 @@
                                         <td>${list[3]}</td>
                                         <td>${list[4]}</td>
                                         <td>${list[5]}</td>
+                                        <td>${list[6]}</td>
                                         <td>
                                             <button type="reset" class="btn btn-success"><a href="${pageContext.request.contextPath}/shipper/editDH?DH-id=${list[0]}">Hoàn Thành</a></button>
                                         </td>
@@ -58,5 +55,4 @@
         </div>
     </div>
 </div>
-</body>
-</html>
+

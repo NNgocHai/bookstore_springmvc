@@ -1,24 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--<%--%>
-<%--    //    response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");--%>
-<%--//    response.setHeader("Pragma" , "no-cache");--%>
-<%--//    response.setHeader("Expires" , "0");--%>
 <%
 
     if (session.getAttribute("user_admin") == null) {
         response.sendRedirect(request.getContextPath() + "/admin/login");
     }
 %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<style>
-    select option {
-        background-color: white !important;
-    }
-</style>
 <body>
 <div class="content-wrapper">
     <div class="container-fluid">
@@ -43,21 +30,22 @@
                                         <th scope="col">Địa chỉ</th>
                                         <th scope="col">Ngày đặt</th>
                                         <th scope="col">Tổng tiền</th>
+                                        <th scope="col">Ghi chú</th>
                                         <th scope="col">Giao hàng</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${listDHCG}" var="customer">
+                                    <c:forEach items="${listDHCG}" var="donhang">
                                         <tr>
-                                            <td scope="row">${customer.ma_DH}</td>
-                                            <td>${customer.getCustomerEntity().getHoten_Customer()}</td>
-                                                <%--                                        <td>${customer.matkhau_Customer}</td>--%>
-                                            <td>${customer.diachi}</td>
-                                            <td>${customer.ngaydat}</td>
-                                            <td>${customer.tongtien}</td>
+                                            <td scope="row">${donhang.ma_DH}</td>
+                                            <td>${donhang.getCustomerEntity().getHoten_Customer()}</td>
+                                            <td>${donhang.diachi}</td>
+                                            <td>${donhang.ngaydat}</td>
+                                            <td>${donhang.tongtien}</td>
+                                            <td>${donhang.ghichu}</td>
                                             <td>
-                                                <input type="checkbox" id="sp1" name="${customer.ma_DH}"
-                                                       value="${customer.ma_DH}">
+                                                <input type="checkbox" id="sp1" name="${donhang.ma_DH}"
+                                                       value="${donhang.ma_DH}">
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -82,5 +70,3 @@
     </div>
 </div>
 
-</body>
-</html>
