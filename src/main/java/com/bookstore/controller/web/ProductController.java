@@ -229,7 +229,6 @@ public class ProductController {
         List<GioHangEntity> Orders = (List<GioHangEntity>) session.getAttribute("Orders");
         if(Orders == null) {
             model.addAttribute("error", "Bạn chưa có cuốn sách nào trong giỏ hàng");
-
             return "web/CartDetail";
         }
         else {
@@ -239,8 +238,13 @@ public class ProductController {
             if (person != null) {
                 GioHangIDKey gioHangIDKey = new GioHangIDKey();
                 for (GioHangEntity Order : Orders) {
-                    int soluong = Integer.parseInt(request.getParameter(String.valueOf(Order.getCuonSachEntity().getMa_CuonSach())));
-                    Order.setSoluong(soluong);
+                    try{
+                        int soluong = Integer.parseInt(request.getParameter(String.valueOf(Order.getCuonSachEntity().getMa_CuonSach())));
+                        Order.setSoluong(soluong);
+                    }
+                    catch(Exception e){
+                        return "redirect:/web/product/CartDetail";
+                    }
                     gioHangIDKey.setMa_Customer(person.getMa_Customer());
                     gioHangIDKey.setMa_CuonSach(Order.getCuonSachEntity().getMa_CuonSach());
                     Order.setId(gioHangIDKey);
@@ -251,8 +255,13 @@ public class ProductController {
 
             } else {
                 for (GioHangEntity Order : Orders) {
-                    int soluong = Integer.parseInt(request.getParameter(String.valueOf(Order.getCuonSachEntity().getMa_CuonSach())));
-                    Order.setSoluong(soluong);
+                    try{
+                        int soluong = Integer.parseInt(request.getParameter(String.valueOf(Order.getCuonSachEntity().getMa_CuonSach())));
+                        Order.setSoluong(soluong);
+                    }
+                    catch(Exception e){
+                        return "redirect:/web/product/CartDetail";
+                    }
                     tongtien = Order.getCuonSachEntity().getGiabia() * Order.getSoluong() + tongtien;
                 }
             }

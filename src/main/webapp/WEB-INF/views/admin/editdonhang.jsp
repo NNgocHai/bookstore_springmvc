@@ -37,7 +37,7 @@
                         <form:form action="" method="post" modelAttribute="order">
                             <div class="form-group">
                                 <label>Mã khách hàng</label>
-                                <form:input type="text" class="form-control"  path="ma_Customer" value = "${order.ma_Customer} "/>
+                                <form:input type="text" class="form-control"  path="ma_Customer" value = "${order.ma_Customer}" readonly="true"/>
                                 <span style="color:red"><form:errors path="ma_Customer" /></span>
                             </div>
                             <div class="form-group">
@@ -52,17 +52,17 @@
                             </div>
                             <div class="form-group">
                                 <label>Số điện thoại</label>
-                                <form:input type="text" class="form-control" path="sdt" value = "${order.sdt}"/>
+                                <form:input placeholder="888 888 8888" pattern="[0-9]{3} [0-9]{3} [0-9]{4}" maxlength="12" class="form-control" path="sdt" value = "${order.sdt}"/>
                                 <span style="color:red"><form:errors path="sdt"/></span>
                             </div>
                             <div class="form-group">
                                 <label>Ngày đặt</label>
-                                <form:input type="text" class="form-control" path="ngaydat" value = "${order.ngaydat}"/>
+                                <form:input type="text" class="form-control" path="ngaydat" value = "${order.ngaydat}" readonly="true"/>
                                 <span style="color:red"><form:errors path="ngaydat"/></span>
                             </div>
                             <div class="form-group">
                                 <label>Tổng tiền</label>
-                                <form:input type="text" class="form-control" path="tongtien" value = "${order.tongtien}"/>
+                                <form:input type="number" min="0" class="form-control" path="tongtien" value = "${order.tongtien}"/>
                                 <span style="color:red"><form:errors path="tongtien"/></span>
                             </div>
 
