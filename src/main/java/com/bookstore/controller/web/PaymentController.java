@@ -80,7 +80,7 @@ public class PaymentController {
             for (GioHangEntity Order : Orders) {
                 chuoi += removeAccent("&&item_name_" + i + "=" + Order.getCuonSachEntity().getTen_CuonSach());
                 chuoi += "&&quantity_" + i + "=" + Order.getSoluong();
-                chuoi += "&&amount_" + i + "=" + (Order.getCuonSachEntity().getGiabia() / 24000);
+                chuoi += "&&amount_" + i + "=" + (Order.getCuonSachEntity().getGiabia() / 22000.0);
                 i++;
             }
             return "redirect:https://www.sandbox.paypal.com/cgi-bin/webscr?" + chuoi;

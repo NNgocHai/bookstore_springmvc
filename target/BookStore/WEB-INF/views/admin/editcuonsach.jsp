@@ -57,7 +57,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Giá bán</label>
-                                <form:input type="number" min="0"  class="form-control" path="giabia" value = "${product.giabia}"/>
+                                <form:input type="number" min="0" max="100" class="form-control" path="giabia" value = "${product.giabia}"/>
                                 <span style="color:red"><form:errors path="giabia"/></span>
                             </div>
                             <div class="form-group">
