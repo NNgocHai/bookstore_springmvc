@@ -47,17 +47,17 @@
                             </div>
                             <div class="form-group">
                                 <label>Số lượng</label>
-                                <form:input type="text" class="form-control" path="soluong" value = "${product.soluong}"/>
+                                <form:input type="number" min="0" class="form-control" path="soluong" value = "${product.soluong}"/>
                                 <span style="color:red"><form:errors path="soluong"/></span>
                             </div>
                             <div class="form-group">
                                 <label>Discount</label>
-                                <form:input type="text" class="form-control" path="discount" value = "${product.discount}"/>
+                                <form:input type="number" min="0"  class="form-control" path="discount" value = "${product.discount}"/>
                                 <span style="color:red"><form:errors path="discount"/></span>
                             </div>
                             <div class="form-group">
                                 <label>Giá bán</label>
-                                <form:input type="text" class="form-control" path="giabia" value = "${product.giabia}"/>
+                                <form:input type="number" min="0"  class="form-control" path="giabia" value = "${product.giabia}"/>
                                 <span style="color:red"><form:errors path="giabia"/></span>
                             </div>
                             <div class="form-group">

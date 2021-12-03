@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,15 +24,12 @@ public class QuanLiDonHangController {
     @RequestMapping("order/delete")
     public String OrderDelete(ModelMap model, @RequestParam(value = "order_id", required = false) String order_id) {
 
-        DonHangService_impl donhang = new DonHangService_impl();
         List<Integer> listId = new ArrayList<Integer>();
         try{
             listId.add(Integer.parseInt(order_id));
-            donhang.deleteList(listId);
-//            model.addAttribute("donhangList", donhang.findAll());
+            donHangService.deleteList(listId);
             model.addAttribute("message", "Xóa thành công");
             return "redirect:/admin/order/list";
-
         }
         catch (Exception e)
         {
@@ -59,24 +58,18 @@ public class QuanLiDonHangController {
         if (order.getSdt() == null) {
             errors.rejectValue("sdt", "order", "Vui lòng nhập số điện thoại!");
         }
-        if (order.getNgaydat() == null) {
-            errors.rejectValue("ngaydat", "order", "Vui lòng nhập ngày đặt đơn hàng!");
-        }
         if (order.getTongtien() == null) {
             errors.rejectValue("tongtien", "order", "Vui lòng nhập tổng số tiền!");
         }
         if (order.getActiveDH() == null) {
             errors.rejectValue("activeDH", "order", "Vui lòng nhập tình trạng đơn hàng!");
         }
-
         if (errors.hasErrors()) {
             model.addAttribute("order", order);
             model.addAttribute("message", "Vui lòng sửa các lỗi sau đây!");
             return "admin/editdonhang";
         }
-
         try {
-            DonHangService donHangService = new DonHangService_impl();
             model.addAttribute("message", "Cập nhật thành công!");
             donHangService.update(order);
             return "admin/editdonhang";
