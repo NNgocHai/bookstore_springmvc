@@ -64,6 +64,9 @@ public class QuanLiDonHangController {
         if (order.getActiveDH() == null) {
             errors.rejectValue("activeDH", "order", "Vui lòng nhập tình trạng đơn hàng!");
         }
+        if (order.getGhichu() == null) {
+            errors.rejectValue("ghichu", "order", "Vui lòng nhập ghi chú đơn hàng!");
+        }
         if (errors.hasErrors()) {
             model.addAttribute("order", order);
             model.addAttribute("message", "Vui lòng sửa các lỗi sau đây!");

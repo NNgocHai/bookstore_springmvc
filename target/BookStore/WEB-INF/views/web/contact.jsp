@@ -25,7 +25,7 @@
                 <p><b> Hãy liên hệ qua: </b></p>
                 <ul>
                     <li>- Địa chỉ: IT18 - Đại học Sư phạm Kĩ Thuật Hồ Chí Minh - Q.Thủ Đức - TP.HCM </li>
-                    <li>- Số điện thoại: 036.810.3208 </li>
+                    <li>- Số điện thoại: 098.355.9696 </li>
                 </ul>
                 <br>
                 <br>

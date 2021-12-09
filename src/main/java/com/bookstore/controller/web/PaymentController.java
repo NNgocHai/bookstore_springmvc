@@ -15,12 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @Controller
 public class PaymentController {
@@ -51,7 +56,9 @@ public class PaymentController {
                           @RequestParam("email") String user_email,
                           @RequestParam("transaction_payment") String transaction_payment,
                           HttpSession session,
-                          ModelMap model) {
+                          HttpServletResponse response,
+                          ModelMap model) throws IOException {
+        response.setContentType("text/html;charset=UTF-8");
         this.address = address;
         this.phone = phone;
         this.user_email =user_email;
@@ -124,7 +131,21 @@ public class PaymentController {
         int ma_dh = donHangEntity.getMa_DH();
         confirmPayment.ConfirmPayment1(ma_dh, user_email);
 
-        return "web/checkout";
+        PrintWriter out = response.getWriter();
+        out.print("<%@ page contentType=\"text/html;charset=UTF-8\" language=\"java\" %>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<title>Loi</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<script>");
+        out.println("alert('Đặt hàng thành công')");
+        out.println("location.href = \"./home\";");
+        out.println("</script>");
+        out.println("</body>");
+        out.println("</html>");
+        out.close();
+        return "web/index";
     }
 
     private static final char[] SOURCE_CHARACTERS = {'À', 'Á', 'Â', 'Ã', 'È', 'É',
@@ -169,8 +190,9 @@ public class PaymentController {
 
 
     @RequestMapping("/web/paysuccess")
-    public String PayPalSuccess(HttpSession session,
-                                ModelMap model) {
+    public String PayPalSuccess(HttpSession session, HttpServletResponse response,
+                                ModelMap model) throws IOException{
+        response.setContentType("text/html;charset=UTF-8");
         DonHangEntity donHangEntity = new DonHangEntity();
         CuonSachEntity cuonSachEntity = new CuonSachEntity();
         List<CuonSachEntity> cuonSachEntities = new ArrayList<CuonSachEntity>();
@@ -214,7 +236,22 @@ public class PaymentController {
         model.addAttribute("sucess", "Đặt hàng thành công");
         int ma_dh = donHangEntity.getMa_DH();
         confirmPayment.ConfirmPayment1(ma_dh, user_email);
-        return "web/checkout";
+
+        PrintWriter out = response.getWriter();
+        out.print("<%@ page contentType=\"text/html;charset=UTF-8\" language=\"java\" %>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<title>Loi</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<script>");
+        out.println("alert('Đặt hàng thành công')");
+        out.println("location.href = \"./home\";");
+        out.println("</script>");
+        out.println("</body>");
+        out.println("</html>");
+        out.close();
+        return "web/index";
 
     }
     @RequestMapping("/web/checkout")

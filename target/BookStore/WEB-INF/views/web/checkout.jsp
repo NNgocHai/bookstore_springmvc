@@ -76,7 +76,7 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="aa-checkout-single-bill">
-                                                                    <input type="tel" placeholder="Số điện thoại*"
+                                                                    <input placeholder="888 888 8888" pattern="[0-9]{3} [0-9]{3} [0-9]{4}" maxlength="12"
                                                                            required="required" name="phone">
                                                                 </div>
                                                             </div>

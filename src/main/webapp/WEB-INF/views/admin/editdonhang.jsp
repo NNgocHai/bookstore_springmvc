@@ -71,6 +71,11 @@
                                 <form:input type="text" class="form-control" path="activeDH" value = "${order.activeDH}"/>
                                 <span style="color:red"><form:errors path="activeDH"/></span>
                             </div>
+                            <div class="form-group">
+                                <label>Ghi chú</label>
+                                <form:input type="text" class="form-control" path="ghichu" value = "${order.ghichu}" readonly="true"/>
+                                <span style="color:red"><form:errors path="ghichu"/></span>
+                            </div>
                             <div class="form-footer">
                                 <button type="reset" class="btn btn-danger"><i class="fa fa-times"></i><a href="${pageContext.request.contextPath}/admin/order/list">Hủy</a></button>
                                 <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> Cập nhật</button>

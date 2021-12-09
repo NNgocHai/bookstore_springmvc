@@ -36,7 +36,7 @@
                                         <h3>LIÊN HỆ</h3>
                                         <address>
                                             <p>IT18 - Đại học Sư phạm Kĩ Thuật - Q.Thủ Đức - TP.HCM</p>
-                                            <p><span class="fa fa-phone"></span>036.810.3208</p>
+                                            <p><span class="fa fa-phone"></span>098.355.9696</p>
                                             <p><span class="fa fa-envelope"></span>cuahangsachso6@gmail.com</p>
                                         </address>
                                         <div class="aa-footer-social">

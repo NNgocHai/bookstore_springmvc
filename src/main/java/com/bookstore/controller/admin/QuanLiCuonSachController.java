@@ -150,7 +150,8 @@ public class QuanLiCuonSachController {
             errors.rejectValue("mota", "product", "Vui lòng nhập mô tả!");
         }
         if (errors.hasErrors()) {
-            product = productService.findById(product.getMa_CuonSach());
+            CuonSachEntity productfrDB = productService.findById(product.getMa_CuonSach());
+            product.setAnh_CuonSach(productfrDB.getAnh_CuonSach());
             model.addAttribute("product", product);
             model.addAttribute("message", "Vui lòng sửa các lỗi sau đây!");
             return "admin/editcuonsach";

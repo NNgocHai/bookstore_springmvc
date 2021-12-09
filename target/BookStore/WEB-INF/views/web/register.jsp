@@ -28,25 +28,25 @@
                                         ${errMessage}
                                     </p>
                                     <label>Họ tên<span>*</span></label>
-                                    <input type="text" placeholder="Name" name="name" value="${hoten}" required>
+                                    <input class="form-control" type="text" placeholder="Name" name="name" value="${hoten}" required>
                                     <label>Email <span>*</span></label>
-                                    <input style="display: block;width: 100%;height: 40px;border: 1px solid #ccc; padding: 10px" type="email"  placeholder="useremail@gmail.com" name="email" value="${gmail}" required>
+                                    <input class="form-control" style="display: block;width: 100%;height: 40px;border: 1px solid #ccc; padding: 10px" type="email"  placeholder="useremail@gmail.com" name="email" value="${gmail}" required>
                                     <p style="color:#ff0000; display:block">
                                         ${errGmail}
                                     </p>
                                     <label>Số điện thoại<span>*</span></label>
-                                    <input placeholder="888 888 8888" pattern="[0-9]{3} [0-9]{3} [0-9]{4}" maxlength="12" name="sdt" value="${sdt}" required>
+                                    <input class="form-control" placeholder="888 888 8888" pattern="[0-9]{3} [0-9]{3} [0-9]{4}" maxlength="12" name="sdt" value="${sdt}" required>
                                     <p style="color:#ff0000; display:block">
                                         ${errSdt}
                                     </p>
                                     <label>Username<span>*</span></label>
-                                    <input type="text" placeholder="Username" name="username" value="${taikhoan}" required>
+                                    <input class="form-control" type="text" placeholder="Username" name="username" value="${taikhoan}" required>
                                     <p style="color:#ff0000; display:block">
                                         ${errTaikhoan}
                                     </p>
                                     <label>Mật khẩu<span>*</span></label>
-                                    <input type="password" placeholder="Password" name="password" value="${matkhau}" required>
-                                    <input type="text" style="display: none" placeholder="Password" name="vitien" id="vitien">
+                                    <input class="form-control" type="password" placeholder="Password" name="password" value="${matkhau}" required>
+                                    <input class="form-control" type="text" style="display: none" placeholder="Password" name="vitien" id="vitien">
 
                                     <%--<p style="color:red; display: block;"><%=(request.getAttribute("errMessage") == null) ? ""
                                             : request.getAttribute("errMessage")%></p>

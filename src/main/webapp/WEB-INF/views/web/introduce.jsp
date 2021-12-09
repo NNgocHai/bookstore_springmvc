@@ -24,10 +24,11 @@
                 <b><h1 style ="text-align: center; color: red;">BOOK STORE</h1></b>
                 <p><b>Thành viên nhóm web666: </b></p>
                 <ul>
-                    <li>- 18110278 - Nguyễn Ngọc Hải</li>
-                    <li>- 18110282 - Hồ Văn Hiếu</li>
-                    <li>- 18110331 - Phạm Xuân Nhuận</li>
+                    <li>- 18110326 - Huỳnh Trọng Nghĩa</li>
                     <li>- 18110387 - Nguyễn Thanh Tú</li>
+                    <li>- 18110289 - Trần Văn Hoàng</li>
+                    <li>- 18110321 - Nguyễn Hoài Nam</li>
+                    <li>- 18110278 - Nguyễn Ngọc Hải</li>
                 </ul>
                 <br>
             </div>
