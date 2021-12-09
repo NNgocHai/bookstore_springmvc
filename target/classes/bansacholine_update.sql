@@ -19,7 +19,7 @@ CREATE TABLE CUSTOMER(
                          matkhau_Customer VARCHAR(20),
                          hoten_Customer NVARCHAR(50),
                          gmail_Customer VARCHAR(100) UNIQUE,
-                         sdt_Customer VARCHAR(10) UNIQUE,
+                         sdt_Customer VARCHAR(15) UNIQUE,
                          vitien INT,
 
                          CONSTRAINT CUSTOMER_maCustomer_PK PRIMARY KEY(ma_Customer)
@@ -127,15 +127,15 @@ INSERT INTO ADMINS(taikhoan_Admin, matkhau_Admin , hoten_Admin, gmail_Admin)
 VALUES ('tuthanhqn', '18110387','Nguyễn Thanh Tú', '18110387@student.hcmute.edu.vn');
 
 INSERT INTO CUSTOMER (taikhoan_Customer, matkhau_Customer, hoten_Customer, gmail_Customer, sdt_Customer, vitien)
-VALUES('taitran234', '123', 'Lương Trần Tài', 'luongtrantai23@gmail', '0987290386', '10000000');
+VALUES('taitran234', '123', 'Lương Trần Tài', 'luongtrantai23@gmail', '098 729 0386', '10000000');
 INSERT INTO CUSTOMER(taikhoan_Customer, matkhau_Customer, hoten_Customer, gmail_Customer, sdt_Customer, vitien)
-VALUES ('vanphuc37N', '222', 'Nguyễn Văn Phúc', 'bentre71@gmail.com', '113', '10000000');
+VALUES ('vanphuc37N', '222', 'Nguyễn Văn Phúc', 'bentre71@gmail.com', '098 729 1386', '10000000');
 INSERT INTO CUSTOMER(taikhoan_Customer, matkhau_Customer, hoten_Customer, gmail_Customer, sdt_Customer, vitien)
-VALUES ('giang247', '333', 'Dương Ngọc Giang', 'giang49@gmail.com', '114', '10000000');
+VALUES ('giang247', '333', 'Dương Ngọc Giang', 'giang49@gmail.com', '098 729 2386', '10000000');
 INSERT INTO CUSTOMER(taikhoan_Customer, matkhau_Customer, hoten_Customer, gmail_Customer, sdt_Customer, vitien)
-VALUES ('nghiahuynh11', '444', 'Huỳnh Trọng Nghĩa', 'nghiapmp@gmail.com', '115', '10000000');
+VALUES ('nghiahuynh11', '444', 'Huỳnh Trọng Nghĩa', 'nghiapmp@gmail.com', '098 729 3386', '10000000');
 INSERT INTO CUSTOMER(taikhoan_Customer, matkhau_Customer, hoten_Customer, gmail_Customer, sdt_Customer, vitien)
-VALUES ('phapcute09', '555', 'Nguyễn Văn Pháp', 'phapvanspkt@gmail.com', '116', '10000000');
+VALUES ('phapcute09', '555', 'Nguyễn Văn Pháp', 'phapvanspkt@gmail.com', '098 729 4386', '10000000');
 
 INSERT INTO SHIPPER (taikhoan_Shipper, matkhau_Shipper, hoten_Shipper, gmail_Shipper)
 VALUES('giang247', '19110193', 'Dương Ngọc Giang', 'giangxt@gmail.com');
@@ -291,11 +291,11 @@ INSERT INTO GIOHANG(ma_Customer, ma_CuonSach, soluong)
 VALUES ('3','5', '1');
 
 INSERT INTO DONHANG(ma_Customer, diachi, sdt, tongtien, ngaydat, tinhtrang, ghichu)
-VALUES ('3', 'KTX Khu D1', '0987935915', '190000', '2020-12-05', 'Đã giao','Đã thanh toán');
+VALUES ('3', 'KTX Khu D1', '098 793 5915', '190000', '2021-12-05', 'Đã giao','Đã thanh toán');
 INSERT INTO DONHANG(ma_Customer, diachi, sdt, tongtien, ngaydat, tinhtrang, ghichu)
-VALUES ('1', 'Xuân Thọ - Đà Lạt', '0368103208', '135000', '2020-12-04', 'Chưa giao','Chưa thanh toán');
+VALUES ('1', 'Xuân Thọ - Đà Lạt', '036 810 3208', '135000', '2021-12-04', 'Chưa giao','Chưa thanh toán');
 INSERT INTO DONHANG(ma_Customer, diachi, sdt, tongtien, ngaydat, tinhtrang, ghichu)
-VALUES ('3', 'Bến Tre', '0327300035', '1595000', '2020-12-06', 'Đã giao','Đã thanh toán');
+VALUES ('3', 'Bến Tre', '032 730 0035', '1595000', '2021-12-06', 'Đã giao','Đã thanh toán');
 
 INSERT INTO CHITIETDONHANG
 VALUES ('1', '7', '2', '95000');
@@ -312,4 +312,4 @@ INSERT INTO GIAOHANG
 VALUES('3', '2');
 
 INSERT INTO REVIEW(ma_Customer, ngay_Review, binhluan)
-VALUES ('3', '2020-12-12', 'Sách còn mới, như quảng cáo. Nói chung tốt, sẽ quay lại ủng hộ shop tiếp ạ');
+VALUES ('3', '2021-12-12', 'Sách còn mới, như quảng cáo. Nói chung tốt, sẽ quay lại ủng hộ shop tiếp ạ');

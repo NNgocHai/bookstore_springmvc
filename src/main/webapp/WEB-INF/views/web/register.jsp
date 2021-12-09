@@ -35,7 +35,7 @@
                                         ${errGmail}
                                     </p>
                                     <label>Số điện thoại<span>*</span></label>
-                                    <input type="text" placeholder="Số điện thoại" name="sdt" value="${sdt}" required>
+                                    <input placeholder="888 888 8888" pattern="[0-9]{3} [0-9]{3} [0-9]{4}" maxlength="12" name="sdt" value="${sdt}" required>
                                     <p style="color:#ff0000; display:block">
                                         ${errSdt}
                                     </p>
