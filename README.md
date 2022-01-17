@@ -1,11 +1,9 @@
 # bookstore
 
 ## Giới thiệu
-* Sử dụng công nghệ SPRING MVC tạo nên trang web bán sách online. Trang web giúp cho ba khách hàng có thể xem và chọn mua sách, admin có thể quản lí doanh thu,duyệt đơn hàng,...,shipper có thể xác nhận giao hàng.
+* Sử dụng công nghệ SPRING MVC tạo nên trang web bán sách online. Trang web phục vụ cho ba đối tượng chính khách hàng, admin, shipper.
 
 ## Một số tính năng
-* Tài khoản: 
-* 
 * Khách hàng:
 * Đăng ký, đăng nhập, đăng xuất.
 * Xem danh sách sản phẩm
